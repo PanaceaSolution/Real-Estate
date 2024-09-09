@@ -1,8 +1,7 @@
-const mongoose = require('mongoose');
-mongoose.set('strictQuery', true);  
-const connectDB = (url) => {
+import mongoose from 'mongoose';
+
+mongoose.set('strictQuery', true);
+
+export const connectDB = (url) => {
   return mongoose.connect(url);
-
 };
-
-module.exports = connectDB;
