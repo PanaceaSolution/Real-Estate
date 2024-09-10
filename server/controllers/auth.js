@@ -38,17 +38,17 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    throw new BadRequestError("Invalid email or password"); // Use 'new' here
+    throw new BadRequestError("Invalid email or password");
   }
 
   const user = await User.findOne({ email });
   if (!user) {
-    throw new UnauthenticatedError("Invalid user"); // Use 'new' here
+    throw new UnauthenticatedError("Invalid user");
   }
 
   const isPasswordCorrect = await user.comparePassword(password);
   if (!isPasswordCorrect) {
-    throw new UnauthenticatedError("Invalid password"); // Use 'new' here
+    throw new UnauthenticatedError("Invalid password");
   }
 
 
