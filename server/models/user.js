@@ -3,6 +3,10 @@ import validator from 'validator';
 import bcrypt from 'bcryptjs';
 
 const userSchema = new mongoose.Schema({
+  profilePic: {
+    "type":"String"
+
+  },
   name: {
     type: String,
     required: [true, 'Please provide name'],
