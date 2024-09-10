@@ -3,7 +3,7 @@ import { handleError } from "./middlewares/errorHandler.js";
 
 const app = express();
 
-app.get("/", handleError, (req, res) => {
+app.get("/", handleError,(req, res) => {
   res.send("This route is working fine");
 });
 
