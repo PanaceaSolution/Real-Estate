@@ -1,9 +1,15 @@
 import express from 'express';
-import { uploadImage, uploadMiddleware } from '../controllers/imageController.js'; // Import the necessary functions
+import { uploadImage, updateImage, deleteImage, uploadMiddleware } from '../controllers/imageController.js';
 
 const router = express.Router();
 
-// Define a POST route for the "/upload" endpoint, using the uploadMiddleware
+// Route to upload an image
 router.post('/upload', uploadMiddleware, uploadImage);
+
+// Route to update an image
+router.put('/update', uploadMiddleware, updateImage);
+
+// Route to delete an image
+router.delete('/delete', deleteImage);
 
 export default router;
