@@ -3,11 +3,8 @@ import dotenv from 'dotenv';
 import { connectDB } from './db/connect.js';
 import { authRouter } from './routes/auth.js';
 import profileRouter from './routes/userProfileRoutes.js'; // Import the profile routes
-
 dotenv.config();
 import imageRouter from './routes/imageRoutes.js'; // Image route import
-
-
 const app = express();
 
 app.use(express.json());
@@ -18,7 +15,7 @@ app.use('/api/v1/images', imageRouter); // Image routes
 
 
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5000;S
 
 const start = async () => {
   try {
