@@ -54,11 +54,11 @@ export const login = async (req, res) => {
     }
     const token = generateToken(user);
 
-    res.cookie('token', token , {
+    res.cookie("token", token, {
       httOnly: true,
-      sameSite :'none',
+      sameSite: "none",
       secure: true,
-    })
+    });
     res.status(StatusCodes.OK).json({
       message: "Sucessfully logged in",
       token,
@@ -74,14 +74,13 @@ export const login = async (req, res) => {
 
 export const logout = async (req, res) => {
   console.log("helo");
-  res.clearCookie("token",{
-
-    path:"/",
-    httOnly:true,
-    sameSite:"none",
+  res.clearCookie("token", {
+    path: "/",
+    httOnly: true,
+    sameSite: "none",
     secure: true,
   });
   res.status(StatusCodes.OK).json({
-    message : "Logged out sucessfull",
-  })
+    message: "Logged out sucessfull",
+  });
 };
