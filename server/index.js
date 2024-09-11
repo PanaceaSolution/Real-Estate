@@ -15,7 +15,7 @@ app.use('/api/v1/images', imageRouter); // Image routes
 
 
 
-const port = process.env.PORT || 5000;S
+const port = process.env.PORT || 5000;
 
 const start = async () => {
   try {
