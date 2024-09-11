@@ -16,7 +16,7 @@ const SignInPage = () => {
 
    return (
       <main className='flex items-center justify-center h-screen'>
-         <div className='font-medium w-[400px]'>
+         <div className='font-medium w-[400px] px-2'>
             <h1 className='text-3xl font-bold'>Login</h1>
             <p>Sign in to your account</p>
             <div className='flex flex-col mt-8 space-y-3'>
@@ -26,7 +26,11 @@ const SignInPage = () => {
                   </svg>
                   Sign in with Google
                </button>
-               <span className='text-center text-sm text-gray-400'>--------------------- or Sign in with Email ---------------------</span>
+               <div class="flex items-center">
+                  <hr class="flex-grow border-gray-400" />
+                  <span class="mx-4 text-sm text-gray-400">or Sign in with Email</span>
+                  <hr class="flex-grow border-gray-400" />
+               </div>
             </div>
             <SignInForm
                register={register}
