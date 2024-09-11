@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import { connectDB } from "./db/connect.js";
-// import { authRouter } from "./routes/auth.js";
+import { authRouter } from "./routes/auth.js";
 import { productRouter } from "./routes/product.js";
 
 dotenv.config();
@@ -9,7 +9,6 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
 
 //Test routes
 
@@ -19,6 +18,7 @@ res.send("API is running")
 app.use("/product", productRouter);
 
 // app.use("/api/v1/auth", authRouter);
+app.use("/user", authRouter);
 
 
 
