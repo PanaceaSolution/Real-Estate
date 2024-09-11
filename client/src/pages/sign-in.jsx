@@ -15,7 +15,7 @@ const SignInPage = () => {
    }
 
    return (
-      <main>
+      <main className='flex items-center justify-center h-screen'>
          <div className='font-medium w-[400px]'>
             <h1 className='text-3xl font-bold'>Login</h1>
             <p>Sign in to your account</p>
