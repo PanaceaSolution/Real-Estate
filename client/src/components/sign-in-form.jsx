@@ -2,13 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const SignInForm = ({
-   handleSubmit,
-   email,
-   setEmail,
-   password,
-   setPassword,
-   submitting,
-   error
+   register,
+   onSubmit,
+   errors,
+   isSubmitting
 }) => {
    const [showPassword, setShowPassword] = useState(false);
 
@@ -17,20 +14,26 @@ const SignInForm = ({
    };
 
    return (
-      <form onSubmit={handleSubmit} className='flex flex-col space-y-3 py-6'>
+      <form onSubmit={onSubmit} className='flex flex-col space-y-3 py-6'>
          <div className='py-2 flex flex-col'>
             <label htmlFor="email" className='text-lg font-medium'>Email*</label>
             <input
-               id="email"
-               type="text"
+               type='text'
+               {...register('email',
+                  {
+                     required: 'Email is required',
+                     pattern: {
+                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                        message: 'Invalid email address'
+                     }
+                  }
+               )}
                placeholder='example@example.com'
-               className='border-2 rounded-xl p-2'
-               value={email}
-               onChange={(e) => setEmail(e.target.value)}
+               className='border-2 rounded-lg p-2'
             />
-            {error.email &&
-               <p aria-live="assertive" className='text-red-500 text-sm'>
-                  {error.email}
+            {errors.email &&
+               <p className='text-red-500 text-sm'>
+                  {errors.email.message}
                </p>
             }
          </div>
@@ -38,12 +41,17 @@ const SignInForm = ({
             <label htmlFor="password" className='text-lg font-medium'>Password*</label>
             <div className='relative'>
                <input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
+                  type={showPassword ? 'text' : 'password'}
+                  {...register('password',
+                     {
+                        required: 'Password is required',
+                        minLength: {
+                           value: 6,
+                           message: 'Password must be at least 6 characters long'
+                        }
+                     })}
                   placeholder='********'
-                  className='border-2 rounded-xl p-2 w-full'
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  className='border-2 rounded-lg p-2 w-full'
                />
                <button
                   type="button"
@@ -53,9 +61,9 @@ const SignInForm = ({
                   {showPassword ? 'Hide' : 'Show'}
                </button>
             </div>
-            {error.password &&
-               <p aria-live="assertive" className='text-red-500 text-sm'>
-                  {error.password}
+            {errors.password &&
+               <p className='text-red-500 text-sm'>
+                  {errors.password.message}
                </p>
             }
             <Link to="/forgot-password" className='text-right text-sm font-medium'>
@@ -65,9 +73,9 @@ const SignInForm = ({
          <button
             type="submit"
             className='bg-black text-white rounded-md p-2'
-            disabled={submitting}
+            disabled={isSubmitting}
          >
-            {submitting ? 'Logging in...' : 'Login'}
+            {isSubmitting ? 'Logging in...' : 'Login'}
          </button>
       </form>
    );
