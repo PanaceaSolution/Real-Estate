@@ -1,12 +1,19 @@
-import express from 'express';
-import router from './routes/routes.js';
-import { connectMongoDB } from './connection.js';
+import express from "express";
+import dotenv from "dotenv";
+import router from "./routes/routes.js";
+import { connectMongoDB } from "./connection.js";
+
+dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 3000
+
 app.use(express.urlencoded({ extended: true }));
 
-connectMongoDB('mongodb://127.0.0.1:27017/real-estate')
+connectMongoDB(
+  process.env.MONGODB_URL
+);
 
-app.use('/', router);
+app.use("/", router);
 
-app.listen(3000, () => console.log('Server running on port 3000'));
+app.listen(PORT, () => console.log("Server running on port 3000"));

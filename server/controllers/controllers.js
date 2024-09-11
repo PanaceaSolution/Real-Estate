@@ -2,6 +2,7 @@ import { Product } from "../models/product.js";
 
 export async function createProduct(req, res) {
   const body = req.body;
+  const imageFile = req.file;
   if (!body || !body.name || !body.price) {
     return res.status(400).json({ msg: "all fields are required" });
   }
@@ -10,11 +11,14 @@ export async function createProduct(req, res) {
       name: body.name,
       price: body.price,
       description: body.description,
-      imageUrl: body.imageUrl,
+      imageUrl: imageFile
+        ? {
+            data: imageFile.buffer,
+            contentType: imageFile.mimetype,
+          }
+        : undefined,
     });
-    return res
-      .status(201)
-      .json({ msg: "product created successfully", productResult });
+    return res.status(201).json({ msg: "product created successfully" });
   } catch (err) {
     console.log("error creating product", err);
   }
