@@ -1,19 +1,23 @@
 import { User } from '../models/user.js';
 import { StatusCodes } from 'http-status-codes';
 import { tokenToResponse } from '../utils/jwt.js';
-import { BadRequestError, UnauthenticatedError } from '../errors/index.js';
+
 
 export const register = async (req, res) => {
   const { email, name, lastName, password } = req.body;
 
   if (!name || !lastName || !email || !password) {
-  throw new BadRequestError('Please provide all required fields: name, lastName, email, password.');
+  return res
+    .status(StatusCodes.BAD_REQUEST)
+    .json({ msg: "Please fill in all the required fields" });
 
   }
 
   const emailAlreadyExists = await User.findOne({ email });
   if (emailAlreadyExists) {
-    throw new BadRequestError('Email already exists');
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ msg: "Email already exists" });
   }
 
   const user = await User.create({ name, lastName, email, password });
@@ -26,17 +30,23 @@ export const login = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    throw new BadRequestError("Invalid email or password");
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ msg: "Please fill in all the required fields" });
   }
 
   const user = await User.findOne({ email });
   if (!user) {
-    throw new UnauthenticatedError("Invalid user");
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ msg: "User not found" });
   }
 
   const isPasswordCorrect = await user.comparePassword(password);
   if (!isPasswordCorrect) {
-    throw new UnauthenticatedError("Invalid password");
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ msg: "Invalid credentials" });
   }
 
   const tokenUser = { name: user.name, userId: user._id, role: user.role };

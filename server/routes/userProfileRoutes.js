@@ -8,6 +8,7 @@ router.get('/',  userController.getUserProfile);
 router.patch('/',  userController.updateUserProfile);
 router.patch('/password',  userController.changePassword);
 router.delete('/',  userController.deleteUserProfile);
+router.get('/user',userController.getallusers);
 
 
 export default router;

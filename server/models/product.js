@@ -23,7 +23,16 @@ const productSchema = new mongoose.Schema(
     },
     imagePublicId: {
       type: String,
-    }
+    },
+    createdby: {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+    },
+    name: {
+      type: String,
+    },
+  },
   },
   { timestamps: true }
 );

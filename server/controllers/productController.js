@@ -1,11 +1,7 @@
 import { Product } from "../models/product.js";
+
 import { StatusCodes } from 'http-status-codes';
-import {
-  CustomError,
-  UnauthenticatedError,
-  NotFoundError,
-  BadRequestError,
-} from '../errors/index.js';
+
 
 // Create Product
 
@@ -19,7 +15,9 @@ export async function createProduct(req, res) {
     !body.price ||
     !body.description ||
     !body.address) {
-    throw new BadRequestError("All fields are required");
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ msg: "Please fill in all the required fields" });
   }
 
   try {
@@ -30,9 +28,12 @@ export async function createProduct(req, res) {
       address: body.address,
       imageUrl: image_secure_url,
       imagePublicId: public_id,
-
+      createdby: {
+        userId: req.user.id,
+        name: req.user.name,
+      },
   });
-
+console.log(req.user.name)
     return res
       .status(StatusCodes.CREATED)
       .json({ msg: "Product created successfully", productResult });
@@ -47,7 +48,16 @@ export async function updateProduct(req, res) {
   const public_id = req.public_id;
   const image_secure_url = req.image_secure_url;
   const { name, description, price, address} = req.body;
+  const userId=req.user.id;
 
+  const product = await Product.findById(id);
+
+  if (!product) {
+     return res.status(StatusCodes.NOT_FOUND).json({ msg: "Product not found" });
+   }
+    if (product.createdby.userId.toString() !== userId.toString()) {
+    return res.status(StatusCodes.UNAUTHORIZED).json({ msg: "You are not authorized to update this product" });
+  }
   try {
     const update = await Product.updateOne(
       { _id: id },
@@ -69,10 +79,10 @@ export async function updateProduct(req, res) {
       return res.status(StatusCodes.BAD_REQUEST).json({ msg: "No changes made to the product" });
     }
 
-    const updatedProduct = await Product.findById(id);
+  
 
     return res.status(StatusCodes.OK).json({
-      msg: "Product updated successfully",updatedProduct
+      msg: "Product updated successfully",product
     });
 
   } catch (err) {
@@ -86,11 +96,13 @@ export const deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
     const product = await Product.findById(id);
-
+    const userId=req.user.id;
     if (!product) {
-      throw new NotFoundError("Product not found");
+      return res.status(404).json({ msg: "Product not found" });
     }
-
+    if (product.createdby.userId.toString() !== userId.toString()) {
+      return res.status(401).json({ msg: "You are not authorized to delete this product" });
+    }
     await product.remove();
     res.status(200).json({ msg: "Product removed successfully" });
   } catch (err) {
@@ -98,7 +110,7 @@ export const deleteProduct = async (req, res) => {
   }
 };
 
-// Search Product
+
 export const searchProduct = async (req, res) => {
   try {
     let query = {};
@@ -114,7 +126,7 @@ export const searchProduct = async (req, res) => {
     const searchedProducts = await Product.find(query);
 
     if (searchedProducts.length === 0) {
-      throw new NotFoundError("No products found matching the search criteria");
+      return res.status(404).json({ msg: "No products found matching the search criteria" });
     }
 
     res.json(searchedProducts);
@@ -127,6 +139,37 @@ export const searchProduct = async (req, res) => {
 export const getallProducts = async (req, res) => {
   try {
     const products = await Product.find({});
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ msg: "Internal Server Error", error: err.message });
+  }
+}
+
+
+export const getSingleProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await Product.findById(id);
+    if (!product) {
+      return res.status(404).json({ msg: "Product not found" });
+    }
+    res.json(product);
+  }
+  catch (err) {
+    res.status(500).json({ msg: "Internal Server Error", error: err.message });
+  }
+}
+
+export const getMyProducts = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    console.log(userId)
+
+    const products = await Product.find({ "createdby.userId": userId });
+    if (products.length === 0) {
+      return res.status(200).json({ msg: "You have no posts yet" });
+    }
+
     res.json(products);
   } catch (err) {
     res.status(500).json({ msg: "Internal Server Error", error: err.message });
