@@ -1,26 +1,28 @@
 import express from "express";
 const router = express.Router();
+import { upload } from "../middlewares/upload.js";
 
+import { createProduct, updateProduct } from "../controllers/productController.js";
 import { Product } from "../models/product.js";
 
-router.post("/create", async (req, res) => {
-  try {
-    let { name, price, description, address } = req.body;
+// router.post("/create", async (req, res) => {
+//   try {
+//     let { name, price, description, address } = req.body;
 
-    let product = await Product.create({
-      name,
-      price,
-      description,
-      address,
-    });
-    // console.log(product);
-    console.log("product created successfuly");
-    res.status(201).json({ product });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: error.message });
-  }
-});
+//     let product = await Product.create({
+//       name,
+//       price,
+//       description,
+//       address,
+//     });
+//     // console.log(product);
+//     console.log("product created successfuly");
+//     res.status(201).json({ product });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ error: error.message });
+//   }
+// });
 
 router.post("/delete/:productid", async (req, res) => {
   try {
@@ -58,4 +60,8 @@ router.post("/search", async (req, res) => {
     });
   }
 });
+
+router.post("/create", upload.single("image"), createProduct);
+router.patch("/update/:id", updateProduct);
+
 export const productRouter = router;
