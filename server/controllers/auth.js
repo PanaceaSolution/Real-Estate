@@ -1,13 +1,7 @@
 import { User } from '../models/user.js';
 import { StatusCodes } from 'http-status-codes';
-import { createJWT } from '../utils/jwt.js';
-import { 
-  CustomError,
-  UnauthenticatedError,
-  NotFoundError,
-  BadRequestError, } from '../errors/index.js';
-
-
+import { tokenToResponse } from '../utils/jwt.js';
+import { BadRequestError, UnauthenticatedError } from '../errors/index.js';
 
 export const register = async (req, res) => {
   const { email, name, lastName, password } = req.body;
@@ -23,20 +17,15 @@ export const register = async (req, res) => {
     return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Email already exists' });
   }
 
-  const user = await User.create({
-    name,
-    lastName,
-    email,
-    password,
-  });
+  const user = await User.create({ name, lastName, email, password });
   const tokenUser = { name: user.name, userId: user._id, role: user.role };
-  const token = createJWT({ payload: tokenUser });
-  res.status(StatusCodes.CREATED).json({ user: tokenUser, token });
 
+  tokenToResponse({ res, user: tokenUser });  
 };
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
+
   if (!email || !password) {
     throw new BadRequestError("Invalid email or password");
   }
@@ -51,16 +40,17 @@ export const login = async (req, res) => {
     throw new UnauthenticatedError("Invalid password");
   }
 
-
-
   const tokenUser = { name: user.name, userId: user._id, role: user.role };
-  const token = createJWT({ payload: tokenUser });
-  res.status(StatusCodes.CREATED).json({ user: tokenUser, token });
+
+  tokenToResponse({ res, user: tokenUser });  
 };
 
-
-
-
 export const logout = async (req, res) => {
-
+  res.clearCookie('token', {
+    path: '/',
+    httpOnly: true,
+    sameSite: 'none',
+    secure: 'true',
+  });
+  res.status(StatusCodes.OK).json({ message: 'Logged out successfully' });
 };
