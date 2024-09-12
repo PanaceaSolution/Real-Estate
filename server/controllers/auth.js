@@ -53,7 +53,6 @@ export const login = async (req, res) => {
       });
     }
     const token = generateToken(user);
-
     res.cookie("token", token, {
       httOnly: true,
       sameSite: "none",
