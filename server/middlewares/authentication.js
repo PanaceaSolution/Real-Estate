@@ -1,22 +1,17 @@
-import dotenv from 'dotenv';
-dotenv.config();
 import jwt from 'jsonwebtoken';
-import { UnauthenticatedError } from '../errors/Unauthenticated.js';
 
-export const authentication = async (req, res, next) => {
-  
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith('Bearer')) {
-    throw new UnauthenticatedError('Authentication invalid');
+export const authentication = (req, res, next) => {
+  const token = req.headers.authorization?.split(' ')[1]; // Extract Bearer token
+  if (!token) {
+    return res.status(401).json({ message: 'Not authorized, no token' });
   }
-  const token = authHeader.split(' ')[1];
 
   try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = { userId: payload.userId};
+    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Verify token
+    console.log("Decoded token:", decoded); // Debugging line to verify token content
+    req.user = { id: decoded.userId }; // Attach the user ID from token payload
     next();
   } catch (error) {
-    throw new UnauthenticatedError('Authentication invalid');
+    res.status(401).json({ message: 'Not authorized, token failed' });
   }
 };
-
