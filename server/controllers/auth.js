@@ -34,6 +34,7 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     let { email, password } = req.body;
+    // console.log(req.body)
     if (!email || !password) {
       return res.status(StatusCodes.BAD_REQUEST).json({
         message: "Please provide email and password",
@@ -41,6 +42,7 @@ export const login = async (req, res) => {
     }
 
     let user = await User.findOne({ email: email });
+    
     if (!user) {
       return res.status(StatusCodes.UNAUTHORIZED).json({
         message: "Invalid email or password",
@@ -64,7 +66,7 @@ export const login = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500),
+    res.status(500).
       json({
         error: error.message,
       });

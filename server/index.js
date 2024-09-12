@@ -1,30 +1,23 @@
-import express from "express";
-import dotenv from "dotenv";
-import { connectDB } from "./db/connect.js";
-import { authRouter } from "./routes/auth.js";
-import { productRouter } from "./routes/product.js";
-
+import express from 'express';
+import dotenv from 'dotenv';
+import { connectDB } from './db/connect.js';
+import { authRouter } from './routes/auth.js';
+import {productRouter} from './routes/product.js';
+import profileRouter from './routes/userProfileRoutes.js'; // Import the profile routes
 dotenv.config();
-
+import imageRouter from './routes/imageRoutes.js'; // Image route import
 const app = express();
 
 app.use(express.json());
 
-//Test routes
-
-app.get("/",(req, res)=>{
-res.send("API is running")
-})
-app.use("/product", productRouter);
-
-// app.use("/api/v1/auth", authRouter);
-app.use("/user", authRouter);
+app.use('/api/v1/auth', authRouter); // Authentication routes
+app.use('/api/v1/', profileRouter); // Profile routes mounted here
+app.use('/api/v1/images', imageRouter); // Image routes
+app.use('/api/v1/products',productRouter)
 
 
 
 const port = process.env.PORT || 5000;
-
-
 
 const start = async () => {
   try {
