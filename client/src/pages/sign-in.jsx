@@ -40,7 +40,7 @@ const SignInPage = () => {
             />
             <div className='text-center text-base text-gray-400'>
                Don't have an account?
-               <Link to="/signup" className='text-black text-lg'> Sign up</Link>
+               <Link to="/sign-up" className='text-black text-lg'> Sign up</Link>
             </div>
          </div>
       </main>

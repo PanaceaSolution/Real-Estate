@@ -9,16 +9,16 @@ const Header = () => {
   return (
     // Main div class for navigation bar
     <div className='relative bg-slate-300 p-4 flex items-center justify-between shadow-md'>
-      
+
       {/* First section for logo and navigation links */}
       <div className='flex items-center space-x-12'>
-        
+
         {/* Website logo */}
         <img src={logo1} alt="Website logo" className='h-10 w-auto object-contain' />
-        
+
         <div className=' text-xl font-semibold text-indigo-600'>Hamro_Ghar_Jaga</div>
-       
-        
+
+
         {/* Navigation links */}
         <div className='flex space-x-6'>
           <Link to="/home" className='text-gray-800 font-medium hover:text-gray-600 transition-colors'>Home</Link>
@@ -34,7 +34,7 @@ const Header = () => {
           value={searchQuery}
           onChange={handleSearchChange}
         />
-        
+
         {/* Conditionally display search results */}
         {searchQuery && (
           <div className='absolute top-full left-0 w-full bg-white border border-gray-300 mt-2 max-h-60 overflow-y-auto z-10'>
@@ -54,7 +54,7 @@ const Header = () => {
       </div>
 
       {/* Right side Sign In */}
-      <Link to="/SignIn" className='text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-full font-medium transition-colors'>Sign In</Link>
+      <Link to="/sign-in" className='text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-full font-medium transition-colors'>Sign In</Link>
 
     </div>
   );
