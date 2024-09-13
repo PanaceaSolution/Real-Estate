@@ -2,8 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/header';
 import Home from './pages/Home';
-import AboutUs from './pages/AboutUs'; 
-import SignIn from './pages/SignIn'; 
+import AboutUs from './pages/AboutUs';
+import SignInPage from './pages/sign-in';
 import Footer from './components/footer';
 
 const App = () => {
@@ -16,8 +16,7 @@ const App = () => {
           <Routes>
             <Route path="/home" element={<Home />} />
             <Route path="/aboutUs" element={<AboutUs />} />
-            <Route path="/signIn" element={<SignIn />} />
-            
+            <Route path="/signIn" element={<SignInPage />} />
           </Routes>
         </main>
 
