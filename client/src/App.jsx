@@ -1,9 +1,9 @@
 import React from 'react'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Header from './components/header';
-import Home from './components/home';
-import Aboutus from './components/aboutUs';
-import SignUp from './components/signUp';
+import Home from './pages/home';
+import Aboutus from './pages/aboutUs';
+import SignIn from './pages/signIn';
 
 
 const App = () => {
@@ -15,7 +15,10 @@ const App = () => {
       <Routes>
         <Route path="/home" element={<Home/>}/>
         <Route path="/aboutUs" element={<Aboutus />}/>
-        <Route path="/signUp" element={<SignUp />}/>
+        <Route path="/signIn" element={<SignIn />}/>
+        {/* <Route path ="*" element={<NotFound/>} />  */}
+
+
         
 
 
@@ -27,5 +30,7 @@ const App = () => {
 
   )
 }
+
+// const NotFound = ()=> <h2> 404 - page Not Found </h2>
 
 export default App

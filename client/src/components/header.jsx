@@ -14,9 +14,10 @@ const Header = () => {
       <div className='flex items-center space-x-12'>
         
         {/* Website logo */}
-        <img src={logo1} alt="Website logo" className='h-10 w-auto rounded-full object-cover' />
+        <img src={logo1} alt="Website logo" className='h-10 w-auto object-contain' />
         
-        <div className='text-gray-800 text-xl font-semibold'>Hamro Ghar_Jaga</div>
+        <div className=' text-xl font-semibold text-indigo-600'>Hamro_Ghar_Jaga</div>
+       
         
         {/* Navigation links */}
         <div className='flex space-x-6'>
@@ -52,8 +53,8 @@ const Header = () => {
         )}
       </div>
 
-      {/* Right side Sign Up */}
-      <Link to="/SignUp" className='text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-full font-medium transition-colors'>Sign Up</Link>
+      {/* Right side Sign In */}
+      <Link to="/SignIn" className='text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-full font-medium transition-colors'>Sign In</Link>
 
     </div>
   );
