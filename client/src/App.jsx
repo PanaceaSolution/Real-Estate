@@ -1,36 +1,32 @@
-import React from 'react'
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/header';
-import Home from './pages/home';
-import Aboutus from './pages/aboutUs';
-import SignIn from './pages/signIn';
-
+import Home from './pages/Home';
+import AboutUs from './pages/AboutUs'; 
+import SignIn from './pages/SignIn'; 
+import Footer from './components/footer';
 
 const App = () => {
   return (
-  
-      <Router>
-      <Header/>
-      
-      <Routes>
-        <Route path="/home" element={<Home/>}/>
-        <Route path="/aboutUs" element={<Aboutus />}/>
-        <Route path="/signIn" element={<SignIn />}/>
-        {/* <Route path ="*" element={<NotFound/>} />  */}
+    <Router>
+      <div className="flex flex-col min-h-screen">
+        <Header />
 
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/home" element={<Home />} />
+            <Route path="/aboutUs" element={<AboutUs />} />
+            <Route path="/signIn" element={<SignIn />} />
+            
+          </Routes>
+        </main>
 
-        
-
-
-
-      </Routes>
-      </Router>
-
- 
-
-  )
+        <Footer />
+      </div>
+    </Router>
+  );
 }
 
-// const NotFound = ()=> <h2> 404 - page Not Found </h2>
 
-export default App
+
+export default App;
