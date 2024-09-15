@@ -1,9 +1,11 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import SignInForm from '../components/sign-in-form';
 import { useForm } from 'react-hook-form'
 
 const SignInPage = () => {
    const navigate = useNavigate()
+   const location = useLocation()
+   const from = location.state?.from?.pathname || '/'
 
    const {
       register,
@@ -12,9 +14,14 @@ const SignInPage = () => {
    } = useForm()
 
    const onSubmit = (data) => {
-      console.log(data)
-      navigate('/')
-   }
+      console.log(data);
+      const userData = {
+         ...data,
+         role: 'admin',
+      };
+      sessionStorage.setItem('user', JSON.stringify(userData));
+      navigate(from, { replace: true });
+   };
 
    return (
       <main className='flex items-center justify-center h-screen'>
