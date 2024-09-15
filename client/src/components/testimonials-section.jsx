@@ -1,8 +1,5 @@
 import React from 'react'
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import { FaArrowAltCircleLeft } from "react-icons/fa";
 
 const reviews = [
    {
@@ -77,7 +74,7 @@ export const TestimonialsSection = () => {
       infinite: true,
       speed: 500,
       slidesToShow: 3,
-      slidesToScroll: 3,
+      slidesToScroll: 1,
       initialSlide: 0,
       nextArrow: <SampleNextArrow />,
       prevArrow: <SamplePrevArrow />,
@@ -86,7 +83,7 @@ export const TestimonialsSection = () => {
             breakpoint: 1200,
             settings: {
                slidesToShow: 2,
-               slidesToScroll: 2,
+               slidesToScroll: 1,
                infinite: true,
             }
          },
@@ -108,20 +105,22 @@ export const TestimonialsSection = () => {
       ]
    };
    return (
-      <div className="w-full flex flex-col items-center justify-center p-2 py-10 px-4 sm:px-6 lg:py-24 lg:px-8">
-         <h2 className="text-6xl font-bold mb-12">Clients <span className="text-purple-800">Reviews</span></h2>
+      <div className="w-full flex flex-col items-center justify-center p-2 py-14 px-4 sm:px-6 lg:py-24 lg:px-8">
+         <h2 className="text-4xl lg:text-6xl font-bold mb-6 lg:mb-12">Clients <span className="text-primary">Reviews</span></h2>
 
          <div className='w-full'>
             <Slider {...settings}>
                {reviews.map((s) => (
-                  <div key={s.id} className='px-4 my-2'>
-                     <div className="p-4 bg-white rounded-2xl shadow-lg shadow-purple-200 min-h-[200px] space-y-4">
-                        <img src={s.img} alt="Customer" className="w-32 h-32 rounded-full" />
-                        <div>
-                           <h2 className="text-xl font-bold text-gray-800 ">{s.name}</h2>
-                           <p className="text-sm text-purple-500 leading-relaxed">{s.title}</p>
+                  <div key={s.id} className='px-2 my-2'>
+                     <div className="p-4 bg-white rounded-2xl shadow-lg shadow-shadow space-y-4 bg-card">
+                        <p className="min-h-[200px] md:min-h-[150px] text-center text-lg text-desc font-medium leading-relaxed">"{s.review}"</p>
+                        <div className=' flex items-center gap-2 mt-4'>
+                           <img src={s.img} alt="Customer" className="w-20 h-20 rounded-full" />
+                           <div>
+                              <h2 className="text-xl font-bold">{s.name}</h2>
+                              <p className="text-sm text-primary font-medium">{s.title}</p>
+                           </div>
                         </div>
-                        <p className="text-sm text-gray-500 leading-relaxed">{s.review}</p>
                      </div>
                   </div>
                ))}
