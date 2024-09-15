@@ -1,5 +1,5 @@
 import { FaBath, FaBed, FaRulerCombined } from "react-icons/fa";
-import { FaKitchenSet } from "react-icons/fa6";
+import { FaKitchenSet, FaLocationDot } from "react-icons/fa6";
 
 export const PropertyCard = ({ ...p }) => {
    return (
@@ -7,15 +7,18 @@ export const PropertyCard = ({ ...p }) => {
          <div className='bg-white rounded-xl'>
             <img src={p.image} alt="Property" className='w-full max-h-64 object-cover rounded-t-lg h-1/3 md:h-64' />
             <div className='p-4 space-y-2'>
-               <div className='flex justify-between'>
-                  <h1 className='text-lg font-semibold'>
+               <div>
+                  <h1 className='flex justify-between items-center text-lg font-semibold'>
                      {p.title}
-                     <p className='text-sm text-purple-500'>{p.address}</p>
+                     <p className='text-2xl font-bold text-primary'>${p.price}</p>
                   </h1>
-                  <p className='text-2xl font-bold text-purple-700'>${p.price}</p>
+                  <p className='text-sm text-primary/80 flex items-center gap-1'>
+                     <FaLocationDot />
+                     {p.address}
+                  </p>
                </div>
-               <p className='text-gray-500 text-sm'>{p.desc}</p>
-               <div className='flex justify-between items-center text-sm'>
+               <p className='text-desc text-sm'>{p.desc}</p>
+               <div className='flex justify-between items-center text-sm font-medium'>
                   <p>
                      <FaBed color='#A855F7' size={20} />
                      {p.bedroom} Bedroom
@@ -33,7 +36,7 @@ export const PropertyCard = ({ ...p }) => {
                      {p.area} Sqft
                   </p>
                </div>
-               <button className=' px-4 py-2 bg-purple-200 rounded-2xl font-medium'>View Details</button>
+               <button className=' px-4 py-2 bg-shadow rounded-2xl font-medium'>View Details</button>
             </div>
          </div>
       </div>
