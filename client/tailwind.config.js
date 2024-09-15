@@ -13,7 +13,7 @@ export default {
         'primary': '#6B21A8',
         'danger': '#dc2626',
         'shadow': '#e9d5ff',
-        'desc': '#6b7280',
+        'text': '#6b7280',
       }
     }
   },
