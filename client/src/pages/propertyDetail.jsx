@@ -6,14 +6,14 @@ import {
   FaBath,
   FaRulerCombined,
 } from "react-icons/fa6";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { properties } from "../properties";
 
 const PropertyDetail = () => {
   const { id } = useParams();
   const property = properties.find((item) => item.id === Number(id));
   return (
-    <div className="px-[1rem] md:px-[3rem] grid grid-cols-1fr lg:grid-cols-[1fr_500px] md:gap-16 mt-4">
+    <div className="px-[1rem] md:px-[3rem] grid grid-cols-1fr lg:grid-cols-[1fr_450px] md:gap-16 mt-4">
       <div className="">
         <div className="max-h-[600px] max-w-full md:h-[600px] w-full p-2 rounded-md border">
           <img
@@ -69,8 +69,31 @@ const PropertyDetail = () => {
           <p className="text-text text-md md:text-xl">{property.desc}</p>
         </div>
       </div>
-      <div className="md:border rounded-md">
-        product listing page
+      <div className="max-w-[500px]">
+        <div></div>
+        <div className="h-[70vh] md:w-full lg:w-[30rem]  lg:fixed lg:overflow-y-auto lg:overflow-x-hidden lg:px-6">
+          <h4 className="text-2xl font-medium mb-2">Related Properties</h4>
+          {properties.map((property) => (
+            <Link to={`/properties/${property.id}`}>
+              <div className="flex gap-[1rem] max-h-[120px] shadow-md my-4 hover:bg-shadow hover:cursor-pointer p-2">
+                <div className="h-[100px] w-[150px] rounded-lg">
+                  <img
+                    src={property.image}
+                    class="img-fluid rounded-lg h-full w-full"
+                    alt={property.title}
+                  />
+                </div>
+                <div>
+                  <h3 className="text-lg font-medium">{property.title}</h3>
+                  <p className="text-text">{property.address}</p>
+                  <p className="text-primary font-semibold">
+                    ${property.price}
+                  </p>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
