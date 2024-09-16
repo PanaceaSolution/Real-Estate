@@ -11,6 +11,7 @@ import Users from './pages/admin-dashboard/Users';
 import Properties from './pages/admin-dashboard/Properties';
 import AdminRoute from './routes/AdminRoute';
 import AdminLayout from './pages/admin-dashboard/AdminLayout';
+import AddProperty from './pages/add-property';
 
 const App = () => {
   return (
@@ -30,11 +31,14 @@ const App = () => {
               <Route element={<AdminLayout />}>
                 <Route path="/admin/users" element={<Users />} />
                 <Route path="/admin/properties" element={<Properties />} />
+                <Route path="/admin/add-property" element={<AddProperty />} />
+                <Route path="/admin/edit-property" element={<AddProperty />} />
               </Route>
             </Route>
 
             <Route element={<SecureRoute />}>
               <Route path="/profile" element={<AboutUs />} />
+              <Route path="/add-property" element={<AddProperty />} />
             </Route>
 
           </Routes>
