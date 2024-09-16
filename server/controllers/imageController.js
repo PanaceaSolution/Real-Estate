@@ -30,7 +30,7 @@ export const uploadImage = async (req, res, next) => {
               .json({ message: "Failed to upload image to Cloudinary", error });
           }
           req.image_secure_url = result.secure_url;
-          req.public_id=result.public_id 
+          req.public_id = result.public_id;
           next();
         }
       )
@@ -80,7 +80,7 @@ export const updateImage = async (req, res, next) => {
             }
 
             req.image_secure_url = result.secure_url;
-            req.public_id=result.public_id 
+            req.public_id = result.public_id;
             next();
           }
         )

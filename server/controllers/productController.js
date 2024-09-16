@@ -1,7 +1,6 @@
 import { Product } from "../models/product.js";
 
-import { StatusCodes } from 'http-status-codes';
-
+import { StatusCodes } from "http-status-codes";
 
 // Create Product
 
@@ -10,11 +9,13 @@ export async function createProduct(req, res) {
   const image_secure_url = req.image_secure_url;
   const public_id = req.public_id;
 
-  if (   !body ||
+  if (
+    !body ||
     !body.name ||
     !body.price ||
     !body.description ||
-    !body.address) {
+    !body.address
+  ) {
     return res
       .status(StatusCodes.BAD_REQUEST)
       .json({ msg: "Please fill in all the required fields" });
@@ -32,31 +33,34 @@ export async function createProduct(req, res) {
         userId: req.user.id,
         name: req.user.name,
       },
-  });
-console.log(req.user.name)
+    });
+    console.log(req.user.name);
     return res
       .status(StatusCodes.CREATED)
       .json({ msg: "Product created successfully", productResult });
   } catch (err) {
-    return res.status(500).json({ msg: "Internal Server Error", error: err.message });
+    return res
+      .status(500)
+      .json({ msg: "Internal Server Error", error: err.message });
   }
 }
-
 
 export async function updateProduct(req, res) {
   const { id } = req.params;
   const public_id = req.public_id;
   const image_secure_url = req.image_secure_url;
-  const { name, description, price, address} = req.body;
-  const userId=req.user.id;
+  const { name, description, price, address } = req.body;
+  const userId = req.user.id;
 
   const product = await Product.findById(id);
 
   if (!product) {
-     return res.status(StatusCodes.NOT_FOUND).json({ msg: "Product not found" });
-   }
-    if (product.createdby.userId.toString() !== userId.toString()) {
-    return res.status(StatusCodes.UNAUTHORIZED).json({ msg: "You are not authorized to update this product" });
+    return res.status(StatusCodes.NOT_FOUND).json({ msg: "Product not found" });
+  }
+  if (product.createdby.userId.toString() !== userId.toString()) {
+    return res
+      .status(StatusCodes.UNAUTHORIZED)
+      .json({ msg: "You are not authorized to update this product" });
   }
   try {
     const update = await Product.updateOne(
@@ -74,20 +78,24 @@ export async function updateProduct(req, res) {
     );
 
     if (update.matchedCount === 0) {
-      return res.status(StatusCodes.NOT_FOUND).json({ msg: "Product not found" });
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ msg: "Product not found" });
     } else if (update.modifiedCount === 0) {
-      return res.status(StatusCodes.BAD_REQUEST).json({ msg: "No changes made to the product" });
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ msg: "No changes made to the product" });
     }
 
-  
-
     return res.status(StatusCodes.OK).json({
-      msg: "Product updated successfully",product
+      msg: "Product updated successfully",
+      product,
     });
-
   } catch (err) {
     console.error("Error updating the product:", err);
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: "Error updating the product" });
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ msg: "Error updating the product" });
   }
 }
 
@@ -96,12 +104,14 @@ export const deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
     const product = await Product.findById(id);
-    const userId=req.user.id;
+    const userId = req.user.id;
     if (!product) {
       return res.status(404).json({ msg: "Product not found" });
     }
     if (product.createdby.userId.toString() !== userId.toString()) {
-      return res.status(401).json({ msg: "You are not authorized to delete this product" });
+      return res
+        .status(401)
+        .json({ msg: "You are not authorized to delete this product" });
     }
     await product.remove();
     res.status(200).json({ msg: "Product removed successfully" });
@@ -109,7 +119,6 @@ export const deleteProduct = async (req, res) => {
     res.status(500).json({ msg: "Internal Server Error", error: err.message });
   }
 };
-
 
 export const searchProduct = async (req, res) => {
   try {
@@ -126,15 +135,16 @@ export const searchProduct = async (req, res) => {
     const searchedProducts = await Product.find(query);
 
     if (searchedProducts.length === 0) {
-      return res.status(404).json({ msg: "No products found matching the search criteria" });
+      return res
+        .status(404)
+        .json({ msg: "No products found matching the search criteria" });
     }
 
     res.json(searchedProducts);
   } catch (err) {
-  res.status(500).json({ msg: "Internal Server Error", error: err.message });
+    res.status(500).json({ msg: "Internal Server Error", error: err.message });
   }
 };
-
 
 export const getallProducts = async (req, res) => {
   try {
@@ -143,8 +153,7 @@ export const getallProducts = async (req, res) => {
   } catch (err) {
     res.status(500).json({ msg: "Internal Server Error", error: err.message });
   }
-}
-
+};
 
 export const getSingleProduct = async (req, res) => {
   try {
@@ -154,16 +163,15 @@ export const getSingleProduct = async (req, res) => {
       return res.status(404).json({ msg: "Product not found" });
     }
     res.json(product);
-  }
-  catch (err) {
+  } catch (err) {
     res.status(500).json({ msg: "Internal Server Error", error: err.message });
   }
-}
+};
 
 export const getMyProducts = async (req, res) => {
   try {
     const userId = req.user.id;
-    console.log(userId)
+    console.log(userId);
 
     const products = await Product.find({ "createdby.userId": userId });
     if (products.length === 0) {
@@ -174,4 +182,4 @@ export const getMyProducts = async (req, res) => {
   } catch (err) {
     res.status(500).json({ msg: "Internal Server Error", error: err.message });
   }
-}
+};
