@@ -14,7 +14,8 @@ const Header = () => {
       <div className='flex items-center space-x-12'>
 
         {/* Website logo */}
-        <img src={logo1} alt="Website logo" className='h-10 w-auto object-contain' />
+       <Link to="/">
+       <img src={logo1} alt="Website logo" className='h-10 w-auto object-contain' /></Link>
 
         <div className=' text-xl font-semibold text-indigo-600'>Hamro_Ghar_Jaga</div>
 
