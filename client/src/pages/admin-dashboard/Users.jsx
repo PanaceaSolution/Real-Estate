@@ -95,7 +95,7 @@ const Users = () => {
    return (
       <main className='w-full bg-base space-y-10'>
 
-         <div className='w-[15%] bg-white p-4 rounded-2xl shadow-md shadow-shadow space-y-2'>
+         <div className='w-[180px] bg-white p-4 rounded-2xl shadow-md shadow-shadow space-y-2'>
             <div className='bg-shadow rounded-full w-16 h-16 flex items-center justify-center '>
                <FaUsers className="text-3xl text-primary" />
             </div>
