@@ -57,7 +57,6 @@ export const userController = {
     }
   },
 
-  // Change user password
   changePassword: async (req, res) => {
     try {
       const userId = req.user.id;
@@ -76,14 +75,27 @@ export const userController = {
       }
 
       // Update password
-      const salt = await bcrypt.genSalt(10);
-      user.password = await bcrypt.hash(newPassword, salt);
-      await user.save(); // Password hashing handled in the pre-save hook
+      user.password = newPassword;
+      await user.save();; // Password hashing handled in the pre-save hook
 
       res.status(200).json({ message: 'Password updated successfully' });
     } catch (error) {
       res.status(500).json({ message: 'Error changing password', error });
     }
+  },
+
+  getallusers: async (req, res) => {
+    try {
+      console.log('User role:', req.user.role);
+      if (req.user.role !== 'admin') {
+        return res.status(403).json({ message: 'You are not authorized to perform this action' });
+      }
+      const users = await User.find();
+      res.status(200).json(users);
+    } catch (error) {
+      res.status(500).json({ message: 'Error getting all users', error });
+    }
   }
 };
+
 
