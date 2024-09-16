@@ -12,6 +12,9 @@ import Properties from './pages/admin-dashboard/Properties';
 import AdminRoute from './routes/AdminRoute';
 import AdminLayout from './pages/admin-dashboard/AdminLayout';
 import AddProperty from './pages/add-property';
+import UserDashboard from './pages/Dashboard/UserDashboard'
+import DefaultLayout from './layout/DefaultLayout';
+import UserStats from './components/UserStats'
 
 const App = () => {
   return (
@@ -36,10 +39,24 @@ const App = () => {
               </Route>
             </Route>
 
+            {/* <Route element={<SecureRoute />}>
+              <Route element={<DefaultLayout />}>
+                <Route path="/dashboard" element={<UserDashboard />} />
+                <Route path="/user-stats" element={<UserStats />} />
+              </Route>
+            </Route> */}
+
             <Route element={<SecureRoute />}>
-              <Route path="/profile" element={<AboutUs />} />
-              <Route path="/add-property" element={<AddProperty />} />
-            </Route>
+              <Route path="/dashboard" element={<UserDashboard />} />
+              <Route
+                path="/user-stats"
+                element={
+                  <DefaultLayout>
+                    <UserStats></UserStats>
+                  </DefaultLayout>
+                }
+              />
+            </Route >
 
           </Routes>
         </main>
