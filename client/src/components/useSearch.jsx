@@ -1,49 +1,24 @@
-import { useState, useEffect } from 'react'
-import { searchData } from './searchData'
+import { useState } from 'react';
+ // Assuming this is your search data source
 
+import {searchData} from '../components/searchData';
 
 const useSearch = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  
+  const filteredProperties = searchData.filter(property =>
+    property.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
-    const [searchQuery, setSearchQuery] = useState('');
-    const [properties, setProperties]= useState([]);
-    const [filteredProperties, setFilteredProperties]= useState([]);
-
-    // uding useEffect for fetching data 
-
-    useEffect(()=>{
-        const fetchProperties = () =>{
-            setProperties(searchData); 
-        };
-        fetchProperties();
-
-
-    },[]);
-
-    //using useEffect for filter peoperties based on the search query
-
-    useEffect(() => {
-        
-        setFilteredProperties(
-          properties.filter(property =>
-            property.title.toLowerCase().includes(searchQuery.toLowerCase())
-          )
-        );
-      }, [searchQuery, properties]);
-
-      const handleSearchChange = (event) => {
-        setSearchQuery(event.target.value);
-      };
-
-
-
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
 
   return {
-   searchQuery,
-   filteredProperties,
-   handleSearchChange
-
-
-
+    searchQuery,
+    setSearchQuery, // Expose setSearchQuery to allow clearing the search
+    filteredProperties,
+    handleSearchChange,
   };
 };
 

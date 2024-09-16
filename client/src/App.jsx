@@ -15,6 +15,7 @@ import AddProperty from './pages/add-property';
 import UserDashboard from './pages/Dashboard/UserDashboard'
 import DefaultLayout from './layout/DefaultLayout';
 import UserStats from './components/UserStats'
+import Search from './pages/search'
 
 const App = () => {
   return (
@@ -28,7 +29,7 @@ const App = () => {
             <Route path="/aboutUs" element={<AboutUs />} />
             <Route path="/sign-in" element={<SignInPage />} />
             <Route path="/sign-up" element={<SignUp />} />
-
+            <Route path='/search' element={<Search />} />
 
             <Route element={<AdminRoute isAdmin="admin" />}>
               <Route element={<AdminLayout />}>
