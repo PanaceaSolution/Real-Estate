@@ -1,8 +1,11 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import SignInForm from '../components/sign-in-form';
 import { useForm } from 'react-hook-form'
 
 const SignInPage = () => {
+   const navigate = useNavigate()
+   const location = useLocation()
+   const from = location.state?.from?.pathname || '/'
 
    const {
       register,
@@ -11,13 +14,19 @@ const SignInPage = () => {
    } = useForm()
 
    const onSubmit = (data) => {
-      console.log(data)
-   }
+      console.log(data);
+      const userData = {
+         ...data,
+         role: 'admin',
+      };
+      sessionStorage.setItem('user', JSON.stringify(userData));
+      navigate(from, { replace: true });
+   };
 
    return (
       <main className='flex items-center justify-center h-screen'>
-         <div className='font-medium w-[400px] px-2'>
-            <h1 className='text-3xl font-bold'>Login</h1>
+         <div className='font-medium w-[400px] bg-white border-2 border-black rounded-2xl p-4 '>
+            <h1 className='text-4xl text-primary font-bold'>Login</h1>
             <p>Sign in to your account</p>
             <div className='flex flex-col mt-8 space-y-3'>
                <button className='border border-black rounded-3xl p-2 mb-6 flex items-center justify-center gap-3 bg-white'>
@@ -26,10 +35,10 @@ const SignInPage = () => {
                   </svg>
                   Sign in with Google
                </button>
-               <div class="flex items-center">
-                  <hr class="flex-grow border-gray-400" />
-                  <span class="mx-4 text-sm text-gray-400">or Sign in with Email</span>
-                  <hr class="flex-grow border-gray-400" />
+               <div className="flex items-center">
+                  <hr className="flex-grow border-desc" />
+                  <span className="mx-4 text-sm text-desc">or Sign in with Email</span>
+                  <hr className="flex-grow border-desc" />
                </div>
             </div>
             <SignInForm
@@ -38,9 +47,9 @@ const SignInPage = () => {
                errors={errors}
                isSubmitting={isSubmitting}
             />
-            <div className='text-center text-base text-gray-400'>
+            <div className='text-center text-base text-desc'>
                Don't have an account?
-               <Link to="/sign-up" className='text-black text-lg'> Sign up</Link>
+               <Link to="/sign-up" className='text-black text-lg hover:underline'> Sign up</Link>
             </div>
          </div>
       </main>

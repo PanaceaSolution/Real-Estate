@@ -16,7 +16,7 @@ const SignInForm = ({
    return (
       <form onSubmit={onSubmit} className='flex flex-col space-y-3 py-6'>
          <div className='py-2 flex flex-col'>
-            <label htmlFor="email" className='text-lg font-medium'>Email*</label>
+            <label htmlFor="email" className='text-lg font-medium ml-1'>Email*</label>
             <input
                type='text'
                {...register('email',
@@ -32,13 +32,13 @@ const SignInForm = ({
                className='border-2 rounded-lg p-2'
             />
             {errors.email &&
-               <p className='text-red-500 text-sm'>
+               <p className='text-danger text-sm ml-1'>
                   {errors.email.message}
                </p>
             }
          </div>
          <div className='py-2 flex flex-col space-y-1'>
-            <label htmlFor="password" className='text-lg font-medium'>Password*</label>
+            <label htmlFor="password" className='text-lg font-medium ml-1'>Password*</label>
             <div className='relative'>
                <input
                   type={showPassword ? 'text' : 'password'}
@@ -56,23 +56,23 @@ const SignInForm = ({
                <button
                   type="button"
                   onClick={togglePasswordVisibility}
-                  className='absolute right-3 top-3 text-sm text-gray-600'
+                  className='absolute right-3 top-3 text-sm text-gray '
                >
                   {showPassword ? 'Hide' : 'Show'}
                </button>
             </div>
             {errors.password &&
-               <p className='text-red-500 text-sm'>
+               <p className='text-danger text-sm ml-1'>
                   {errors.password.message}
                </p>
             }
-            <Link to="/forgot-password" className='text-right text-sm font-medium'>
+            <Link to="/forgot-password" className='text-right text-sm font-medium hover:underline'>
                Forgot Password?
             </Link>
          </div>
          <button
             type="submit"
-            className='bg-black text-white rounded-md p-2'
+            className='bg-primary text-white rounded-md p-2'
             disabled={isSubmitting}
          >
             {isSubmitting ? 'Logging in...' : 'Login'}
