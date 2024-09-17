@@ -9,7 +9,9 @@ export const properties = [
       kitchen: 1,
       bathroom: 2,
       area: 2800,
-      image: "https://plus.unsplash.com/premium_photo-1686090449192-4ab1d00cb735?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      image: "https://plus.unsplash.com/premium_photo-1686090449192-4ab1d00cb735?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      status: 'verified',
+      createdBy: 'John Doe',
    },
    {
       id: 2,
@@ -21,7 +23,9 @@ export const properties = [
       kitchen: 2,
       bathroom: 3,
       area: 3200,
-      image: 'https://images.unsplash.com/photo-1522050212171-61b01dd24579?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+      image: 'https://images.unsplash.com/photo-1522050212171-61b01dd24579?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      status: 'pending',
+      createdBy: 'John Doe',
    },
    {
       id: 3,
@@ -33,7 +37,9 @@ export const properties = [
       kitchen: 1,
       bathroom: 4,
       area: 4000,
-      image: 'https://images.unsplash.com/photo-1702971274208-3ddc0ed49936?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+      image: 'https://images.unsplash.com/photo-1702971274208-3ddc0ed49936?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      status: 'pending',
+      createdBy: 'Jane Smith',
    },
    {
       id: 4,
@@ -45,7 +51,9 @@ export const properties = [
       kitchen: 1,
       bathroom: 2,
       area: 1500,
-      image: 'https://plus.unsplash.com/premium_photo-1687996107376-20005edd18fd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+      image: 'https://plus.unsplash.com/premium_photo-1687996107376-20005edd18fd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      status: 'verified',
+      createdBy: 'Jane Smith',
    },
    {
       id: 5,
@@ -57,7 +65,9 @@ export const properties = [
       kitchen: 2,
       bathroom: 3,
       area: 3000,
-      image: 'https://plus.unsplash.com/premium_photo-1687960117014-f6463f5b419a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+      image: 'https://plus.unsplash.com/premium_photo-1687960117014-f6463f5b419a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      status: 'rejected',
+      createdBy: 'John Doe',
    },
    {
       id: 6,
@@ -69,7 +79,9 @@ export const properties = [
       kitchen: 2,
       bathroom: 3,
       area: 3500,
-      image: 'https://images.unsplash.com/photo-1631821938164-9383abac340c?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+      image: 'https://images.unsplash.com/photo-1631821938164-9383abac340c?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      status: 'verified',
+      createdBy: 'Jane Smith',
    },
    {
       id: 7,
@@ -81,7 +93,9 @@ export const properties = [
       kitchen: 2,
       bathroom: 3,
       area: 3500,
-      image: 'https://images.unsplash.com/photo-1585943870848-879f4b3918d1?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+      image: 'https://images.unsplash.com/photo-1585943870848-879f4b3918d1?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      status: 'verified',
+      createdBy: 'John Doe',
    },
    {
       id: 8,
@@ -93,6 +107,8 @@ export const properties = [
       kitchen: 2,
       bathroom: 3,
       area: 3500,
-      image: 'https://images.unsplash.com/photo-1631821938164-9383abac340c?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+      image: 'https://images.unsplash.com/photo-1631821938164-9383abac340c?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      status: 'rejected',
+      createdBy: 'Jane Smith',
    },
 ]
