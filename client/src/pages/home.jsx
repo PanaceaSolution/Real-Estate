@@ -12,8 +12,8 @@ const Home = () => {
 
          <div className='max-w-screen-2xl mx-auto min-h-screen py-8 px-4 transition-all duration-500'>
             <HeroSection />
-            <WhyUsSection />
             <FeaturedSection />
+            <WhyUsSection />
             <TestimonialsSection />
          </div>
       </main>

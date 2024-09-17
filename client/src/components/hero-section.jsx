@@ -46,7 +46,7 @@ export const HeroSection = () => {
    };
 
    return (
-      <section className="w-full flex justify-center items-center lg:gap-10">
+      <section className="w-full flex justify-center items-center lg:gap-10 mb-10">
          <div className='grid grid-cols-1 xl:grid-cols-2 items-center justify-center '>
             {/* Left section with the title */}
             <div className="w-full py-2 rounded-2xl ">
