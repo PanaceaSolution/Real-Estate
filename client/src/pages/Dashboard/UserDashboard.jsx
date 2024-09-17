@@ -5,7 +5,7 @@ import ViewProfile from "../../components/Profile/ViewProfile";
 const UserDashboard = () => {
   return (
     <DefaultLayout>
-     <ViewProfile/>
+      <ViewProfile />
     </DefaultLayout>
   );
 };

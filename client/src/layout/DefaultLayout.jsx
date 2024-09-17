@@ -29,8 +29,10 @@ const DefaultLayout = ({ children }) => {
 
           {/* Main Content Start */}
           <main>
-            <div className="p-4 sm:ml-64">
-              <div className="mt-14 p-4">{children}</div>
+            <div className="p-4 lg:ml-64">
+              <div className="mt-14 p-4">
+                {children}
+              </div>
             </div>
           </main>
           {/* Main Content End */}

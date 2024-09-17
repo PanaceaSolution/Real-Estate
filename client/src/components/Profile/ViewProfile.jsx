@@ -17,11 +17,11 @@ const ViewProfile = memo(() => {
   useEffect(() => {
     dispatch(getAllUsersAsync());
 
-    
-  }, [dispatch]); 
+
+  }, [dispatch]);
 
   if (status === "loading") {
-    return <Loadding/>
+    return <Loadding />
   }
 
   if (status === "failed") {
@@ -33,7 +33,7 @@ const ViewProfile = memo(() => {
     <section>
       <div className="max-w-7xl mx-auto p-4 rounded-md grid-cols-1 lg:grid-cols-3 gap-4 overflow-y-auto">
         {/* Profile Section */}
-        <div className="col-span-1 lg:col-span-3 p-4 bg-gray-100 rounded-md">
+        <div className="col-span-1 lg:col-span-3 p-4 bg-white rounded-2xl">
           <div className="flex justify-between items-center mb-4">
             <div className="flex gap-4 items-center">
               <img
@@ -45,7 +45,7 @@ const ViewProfile = memo(() => {
                 <p className="font-semibold">Sukraj Chaudhary</p>
               </div>
             </div>
-            <button className="bg-green-500 h-9 w-24 border-2 border-black rounded text-white">
+            <button className="bg-primary h-9 w-24 rounded-2xl text-white">
               Edit
             </button>
           </div>
