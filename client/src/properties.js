@@ -1,10 +1,3 @@
-import house1 from './assets/house1.png';
-import house2 from './assets/house2.png';
-import house3 from './assets/house3.png';
-import house4 from './assets/house4.png';
-import house5 from './assets/house5.png';
-import house6 from './assets/house6.png';
-
 export const properties = [
    {
       id: 1,
@@ -16,7 +9,7 @@ export const properties = [
       kitchen: 1,
       bathroom: 2,
       area: 2800,
-      image: house1
+      image: "https://plus.unsplash.com/premium_photo-1686090449192-4ab1d00cb735?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
    },
    {
       id: 2,
@@ -28,7 +21,7 @@ export const properties = [
       kitchen: 2,
       bathroom: 3,
       area: 3200,
-      image: house2
+      image: 'https://images.unsplash.com/photo-1522050212171-61b01dd24579?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
    },
    {
       id: 3,
@@ -40,7 +33,7 @@ export const properties = [
       kitchen: 1,
       bathroom: 4,
       area: 4000,
-      image: house3
+      image: 'https://images.unsplash.com/photo-1702971274208-3ddc0ed49936?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
    },
    {
       id: 4,
@@ -52,7 +45,7 @@ export const properties = [
       kitchen: 1,
       bathroom: 2,
       area: 1500,
-      image: house4
+      image: 'https://plus.unsplash.com/premium_photo-1687996107376-20005edd18fd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
    },
    {
       id: 5,
@@ -64,7 +57,7 @@ export const properties = [
       kitchen: 2,
       bathroom: 3,
       area: 3000,
-      image: house5
+      image: 'https://plus.unsplash.com/premium_photo-1687960117014-f6463f5b419a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
    },
    {
       id: 6,
@@ -76,6 +69,30 @@ export const properties = [
       kitchen: 2,
       bathroom: 3,
       area: 3500,
-      image: house6
+      image: 'https://images.unsplash.com/photo-1631821938164-9383abac340c?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+   },
+   {
+      id: 7,
+      title: 'Blue Ridge Villa',
+      address: 'San Francisco, United States',
+      price: 380000,
+      desc: 'Modern villa with panoramic city views.',
+      bedroom: 5,
+      kitchen: 2,
+      bathroom: 3,
+      area: 3500,
+      image: 'https://images.unsplash.com/photo-1585943870848-879f4b3918d1?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+   },
+   {
+      id: 8,
+      title: 'Blue Ridge Villa',
+      address: 'San Francisco, United States',
+      price: 380000,
+      desc: 'Modern villa with panoramic city views.',
+      bedroom: 5,
+      kitchen: 2,
+      bathroom: 3,
+      area: 3500,
+      image: 'https://images.unsplash.com/photo-1631821938164-9383abac340c?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
    },
 ]
