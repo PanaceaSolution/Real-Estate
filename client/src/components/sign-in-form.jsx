@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Input } from './ui/input';
+import { Label } from './ui/label';
+import { Button } from './ui/button';
 
 const SignInForm = ({
    register,
@@ -14,10 +17,10 @@ const SignInForm = ({
    };
 
    return (
-      <form onSubmit={onSubmit} className='flex flex-col space-y-3 py-6'>
-         <div className='py-2 flex flex-col'>
-            <label htmlFor="email" className='text-lg font-medium ml-1'>Email*</label>
-            <input
+      <form onSubmit={onSubmit} className='flex flex-col space-y-3 py-3 font-medium'>
+         <div className='grid gap-1 py-2'>
+            <Label htmlFor="email" className='text-base ml-1'>Email</Label>
+            <Input
                type='text'
                {...register('email',
                   {
@@ -32,15 +35,24 @@ const SignInForm = ({
                className='border-2 rounded-lg p-2'
             />
             {errors.email &&
-               <p className='text-danger text-sm ml-1'>
+               <p className='text-destructive text-sm ml-1'>
                   {errors.email.message}
                </p>
             }
          </div>
-         <div className='py-2 flex flex-col space-y-1'>
-            <label htmlFor="password" className='text-lg font-medium ml-1'>Password*</label>
+         <div className='grid gap-1 py-2'>
+            <div className="flex items-center">
+               <Label htmlFor="password" className='text-base ml-1'>Password</Label>
+               <Link
+                  to="/forgot-password"
+                  className="ml-auto inline-block text-sm underline"
+               >
+                  Forgot your password?
+               </Link>
+            </div>
+
             <div className='relative'>
-               <input
+               <Input
                   type={showPassword ? 'text' : 'password'}
                   {...register('password',
                      {
@@ -53,30 +65,29 @@ const SignInForm = ({
                   placeholder='********'
                   className='border-2 rounded-lg p-2 w-full'
                />
-               <button
+               <Button
                   type="button"
+                  variant='ghost'
+                  size='sm'
                   onClick={togglePasswordVisibility}
-                  className='absolute right-3 top-3 text-sm text-gray '
+                  className='absolute right-2 top-1/2 -translate-y-1/2 text-sm text-gray hover:underline'
                >
                   {showPassword ? 'Hide' : 'Show'}
-               </button>
+               </Button>
             </div>
             {errors.password &&
-               <p className='text-danger text-sm ml-1'>
+               <p className='text-destructive text-sm ml-1'>
                   {errors.password.message}
                </p>
             }
-            <Link to="/forgot-password" className='text-right text-sm font-medium hover:underline'>
-               Forgot Password?
-            </Link>
          </div>
-         <button
+         <Button
             type="submit"
             className='bg-primary text-white rounded-md p-2'
             disabled={isSubmitting}
          >
             {isSubmitting ? 'Logging in...' : 'Login'}
-         </button>
+         </Button>
       </form>
    );
 };
