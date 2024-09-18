@@ -1,29 +1,39 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import SignInForm from '../components/sign-in-form';
-import { useForm } from 'react-hook-form'
-import { Button } from '@/components/ui/button';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
 import { FcGoogle } from "react-icons/fc";
-import logo from '../assets/logo1.png'
+import logo from '../assets/logo1.png';
+import { loginAsync, selectUsersStatus, selectUserError } from '../redux/auth/authSlices'; // Import from your slice
+import SignInForm from '../components/sign-in-form';
+import { Button } from '@/components/ui/button';
 
 const SignInPage = () => {
-   const navigate = useNavigate()
-   const location = useLocation()
-   const from = location.state?.from?.pathname || '/'
+   const dispatch = useDispatch();
+   const navigate = useNavigate();
+   const location = useLocation();
+   const from = location.state?.from?.pathname || '/';
+
+   const status = useSelector(selectUsersStatus); // Fetch status from Redux
+   const error = useSelector(selectUserError); // Fetch any errors from Redux
 
    const {
       register,
       handleSubmit,
       formState: { errors, isSubmitting }
-   } = useForm()
+   } = useForm();
 
-   const onSubmit = (data) => {
+   const onSubmit = async (data) => {
       console.log(data);
-      const userData = {
-         ...data,
-         role: 'admin',
-      };
-      sessionStorage.setItem('user', JSON.stringify(userData));
-      navigate(from, { replace: true });
+
+      try {
+         const res = await dispatch(loginAsync(data)).unwrap();
+         console.log("Login successful", res);
+
+         sessionStorage.setItem('user', JSON.stringify(res));
+         navigate(from, { replace: true });
+      } catch (error) {
+         console.log("Login failed", error);
+      }
    };
 
    return (
@@ -33,7 +43,7 @@ const SignInPage = () => {
             <div className="col-span-1 flex items-center justify-center py-12 relative">
                <Link to="/">
                   <img src={logo} alt="Logo" className="absolute top-0 left-0 w-48 h-48" />
-               </Link >
+               </Link>
                <div className="mx-auto grid w-[350px] gap-6">
                   <div className="grid gap-2">
                      <h1 className='text-4xl text-primary font-bold'>Login</h1>
@@ -44,9 +54,13 @@ const SignInPage = () => {
                         register={register}
                         onSubmit={handleSubmit(onSubmit)}
                         errors={errors}
-                        isSubmitting={isSubmitting}
+                        isSubmitting={isSubmitting || status === 'loading'} // Disable submit if loading
                      />
-                     <Button variant="outline" className="w-full bg-white flex items-center gap-2">
+                     <Button
+                        variant="outline"
+                        className="w-full bg-white flex items-center gap-2"
+                        disabled={status === 'loading'}
+                     >
                         <FcGoogle size={20} />Login with Google
                      </Button>
                      <div className="mt-4 text-center text-sm">
@@ -69,7 +83,7 @@ const SignInPage = () => {
             </div>
          </div>
       </main>
-   )
+   );
 }
 
 export default SignInPage;
