@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { FcGoogle } from "react-icons/fc";
 import logo from '../assets/logo1.png';
-import { loginAsync, selectUsersStatus, selectUserError } from '../redux/auth/authSlices';
+import { loginAsync, selectUsersStatus } from '../redux/auth/authSlices';
 import SignInForm from '../components/sign-in-form';
 import { Button } from '@/components/ui/button';
 
@@ -33,11 +33,11 @@ const SignInPage = () => {
 
    return (
       <main className='flex items-center justify-center min-h-screen'>
-         <div className="w-full lg:h-screen lg:grid lg:min-h-[600px] lg:grid-cols-3 xl:min-h-[800px]">
+         <div className="w-full h-screen lg:grid lg:grid-cols-3">
 
-            <div className="col-span-1 flex items-center justify-center py-12 relative">
+            <div className="col-span-1 flex items-center justify-center py-12 relative h-full">
                <Link to="/">
-                  <img src={logo} alt="Logo" className="absolute top-0 left-0 w-48 h-48" />
+                  <img src={logo} alt="Logo" className="absolute -top-10 -left-10 w-48 h-48" />
                </Link>
                <div className="mx-auto grid w-[350px] gap-6">
                   <div className="grid gap-2">
@@ -67,7 +67,7 @@ const SignInPage = () => {
                   </div>
                </div>
             </div>
-            <div className="col-span-2 hidden bg-muted lg:block">
+            <div className="col-span-2 hidden lg:block">
                <img
                   src="https://images.unsplash.com/photo-1631821938164-9383abac340c?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Image"

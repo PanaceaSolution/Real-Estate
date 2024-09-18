@@ -11,10 +11,12 @@ const initialState = {
 // AsyncThunk for fetching users
 export const getAllUsersAsync = createAsyncThunk(
   "auth/getAllUsers",
-  async (_, { rejectWithValue }) => {
+  async (id, { rejectWithValue }) => {
     try {
-      const response = await getAllUsers();
-      return response.data;
+      const response = await getAllUsers(id);
+      console.log(response);
+
+      return response;
     } catch (error) {
       return rejectWithValue(error.message || "Failed to fetch users");
     }
