@@ -16,6 +16,10 @@ import UserDashboard from './pages/Dashboard/UserDashboard'
 import DefaultLayout from './layout/DefaultLayout';
 import UserStats from './components/UserStats'
 import Search from './pages/search'
+import AddUserOwnProperty from './pages/Dashboard/AddProperty';
+import ViewOwnProperty from './pages/Dashboard/ViewOwnProperty';
+import ViewSingleProperty from './pages/Dashboard/ViewSingleProperty';
+import EditProperty from './pages/Dashboard/EditProperty';
 
 const App = () => {
   return (
@@ -57,8 +61,39 @@ const App = () => {
                   </DefaultLayout>
                 }
               />
+              <Route
+                path="/add-property"
+                element={
+                  <DefaultLayout>
+                   <AddUserOwnProperty></AddUserOwnProperty>
+                  </DefaultLayout>
+                }
+              />
+              <Route
+                path="/view-property"
+                element={
+                  <DefaultLayout>
+                  <ViewOwnProperty></ViewOwnProperty>
+                  </DefaultLayout>
+                }
+              />
+              <Route
+                path="/viewOwn-Property/:id"
+                element={
+                  <DefaultLayout>
+                  <ViewSingleProperty></ViewSingleProperty>
+                  </DefaultLayout>
+                }
+              />
+              <Route
+                path="/Edit-Property/:id"
+                element={
+                  <DefaultLayout>
+                  <EditProperty/>
+                  </DefaultLayout>
+                }
+              />
             </Route >
-
           </Routes>
         </main>
 

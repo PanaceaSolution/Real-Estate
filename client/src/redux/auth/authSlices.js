@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllUsers } from "./authAPI";
+import { getAllUsers,register } from "./authAPI";
 
 const initialState = {
   status: "idle", // 'idle' | 'loading' | 'failed'
@@ -20,6 +20,21 @@ export const getAllUsersAsync = createAsyncThunk(
     }
   }
 );
+export const registerAsync = createAsyncThunk(
+  "auth/register",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await register(data);
+      return response.data;
+    } catch (error) {
+      // If the error is an object, ensure it's serializable
+      return rejectWithValue(error.message || 'Failed to fetch users');
+    }
+  }
+);
+
+
+
 
 // Slice
 export const authSlice = createSlice({
@@ -29,6 +44,7 @@ export const authSlice = createSlice({
     resetMessages: (state) => {
       state.error = null;
     },
+    
   },
   extraReducers: (builder) => {
     builder
