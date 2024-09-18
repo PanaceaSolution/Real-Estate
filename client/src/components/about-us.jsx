@@ -3,7 +3,7 @@ import House from '../assets/House.jpg';
 import House2 from '../assets/House2.jpeg';
 import House3 from '../assets/House3.jpg';
 import House4 from '../assets/House4.jpg';
-import niraj from '../assets/niraj.jpg';
+import image from '../assets/image.jpeg';
 
 const Aboutus = () => {
   return (
@@ -88,7 +88,7 @@ const Aboutus = () => {
     {[1, 2, 3, 4].map((i) => (
       <div key={i} className="flex flex-col items-center shadow-xl p-6 bg-white rounded-lg transform transition-transform duration-300 hover:scale-105">
         <img
-          src={niraj}
+          src={image}
           alt={`Team Member ${i}`}
           className="w-32 h-32 object-cover rounded-full border-4 border-gray-200 shadow-md"
         />
