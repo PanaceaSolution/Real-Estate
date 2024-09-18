@@ -1,16 +1,24 @@
 import { Outlet, useLocation } from "react-router-dom";
 
 import Header from "../components/header";
-import Home from "../pages/home";
 import Footer from "../components/footer";
+
 const HomeLayout = () => {
   const location = useLocation();
-  const isRootPath = location.pathname === "/";
+
+  // Check if the current path is one of the specified paths
+  const isRootPath = ['/', '/aboutUs', '/search'].includes(location.pathname);
 
   return (
     <div>
-      {isRootPath && [<Header />, <Home />, <Footer />]}
-      {!isRootPath && [<Header />, <Outlet />, <Footer />]}
+      {/* Render different content based on the route */}
+      {isRootPath && (
+        <>
+          <Header />
+          <Outlet />
+          <Footer />
+        </>
+      )}
     </div>
   );
 };

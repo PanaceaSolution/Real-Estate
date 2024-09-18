@@ -1,36 +1,40 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/header';
+import Footer from './components/footer';
 import AboutUs from './pages/AboutUs';
 import SignInPage from './pages/sign-in';
-import Footer from './components/footer';
 import SignUp from './components/SignUp';
 import Home from './pages/home';
 import SecureRoute from './routes/SecureRoute';
 import Users from './pages/admin-dashboard/Users';
 import Properties from './pages/admin-dashboard/Properties';
 import AdminRoute from './routes/AdminRoute';
-import AdminLayout from './pages/admin-dashboard/AdminLayout';
+import AdminLayout from './layout/AdminLayout';
 import AddProperty from './pages/add-property';
-import UserDashboard from './pages/Dashboard/UserDashboard'
+import UserDashboard from './pages/Dashboard/UserDashboard';
 import DefaultLayout from './layout/DefaultLayout';
-import UserStats from './components/UserStats'
-import Search from './pages/search'
+import UserStats from './components/UserStats';
+import Search from './pages/search';
+import HomeLayout from './layout/HomeLayout';
 
 const App = () => {
   return (
     <Router>
       <div className="flex flex-col min-h-screen bg-base">
-        <Header />
-
         <main className="flex-grow">
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/aboutUs" element={<AboutUs />} />
+            {/* Public Routes */}
+            <Route element={<HomeLayout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/aboutUs" element={<AboutUs />} />
+              <Route path="/search" element={<Search />} />
+            </Route>
+
             <Route path="/sign-in" element={<SignInPage />} />
             <Route path="/sign-up" element={<SignUp />} />
-            <Route path='/search' element={<Search />} />
 
+            {/* Admin Routes */}
             <Route element={<AdminRoute isAdmin="admin" />}>
               <Route element={<AdminLayout />}>
                 <Route path="/admin/users" element={<Users />} />
@@ -40,29 +44,15 @@ const App = () => {
               </Route>
             </Route>
 
-            {/* <Route element={<SecureRoute />}>
+            {/* Secure Routes */}
+            <Route element={<SecureRoute />}>
               <Route element={<DefaultLayout />}>
                 <Route path="/dashboard" element={<UserDashboard />} />
                 <Route path="/user-stats" element={<UserStats />} />
               </Route>
-            </Route> */}
-
-            <Route element={<SecureRoute />}>
-              <Route path="/dashboard" element={<UserDashboard />} />
-              <Route
-                path="/user-stats"
-                element={
-                  <DefaultLayout>
-                    <UserStats></UserStats>
-                  </DefaultLayout>
-                }
-              />
-            </Route >
-
+            </Route>
           </Routes>
         </main>
-
-        <Footer />
       </div>
     </Router>
   );
