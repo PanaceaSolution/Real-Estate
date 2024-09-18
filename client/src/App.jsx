@@ -17,6 +17,7 @@ import DefaultLayout from './layout/DefaultLayout';
 import UserStats from './components/UserStats';
 import Search from './pages/search';
 import HomeLayout from './layout/HomeLayout';
+import PageNotFound from './pages/page-not-found';
 
 const App = () => {
   return (
@@ -51,6 +52,9 @@ const App = () => {
                 <Route path="/user-stats" element={<UserStats />} />
               </Route>
             </Route>
+
+            {/* Catch-All Route for 404 */}
+            <Route path="*" element={<PageNotFound />} />
           </Routes>
         </main>
       </div>

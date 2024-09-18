@@ -4,10 +4,11 @@ import { getAllUsers, login } from "./authAPI";
 const initialState = {
   status: "idle", // 'idle' | 'loading' | 'failed'
   error: null,
-  users: []
+  users: [],
+  user: null, // Add user to store logged-in user data
 };
 
-// AsyncThunk
+// AsyncThunk for fetching users
 export const getAllUsersAsync = createAsyncThunk(
   "auth/getAllUsers",
   async (_, { rejectWithValue }) => {
@@ -15,21 +16,24 @@ export const getAllUsersAsync = createAsyncThunk(
       const response = await getAllUsers();
       return response.data;
     } catch (error) {
-      // If the error is an object, ensure it's serializable
-      return rejectWithValue(error.message || 'Failed to fetch users');
+      return rejectWithValue(error.message || "Failed to fetch users");
     }
   }
 );
 
+// AsyncThunk for login
 export const loginAsync = createAsyncThunk(
   "auth/login",
   async (data, { rejectWithValue }) => {
     try {
       const response = await login(data);
-      return response.data;
+      if (response.user) {
+        return response.user; // Return the user data directly
+      } else {
+        throw new Error("No user data returned");
+      }
     } catch (error) {
-      // If the error is an object, ensure it's serializable
-      return rejectWithValue(error.message || 'Failed to fetch users');
+      return rejectWithValue(error.message || "Failed to log in");
     }
   }
 );
@@ -42,30 +46,31 @@ export const authSlice = createSlice({
     resetMessages: (state) => {
       state.error = null;
     },
+    logout: (state) => {
+      state.user = null; // Reset user state on logout
+    },
   },
   extraReducers: (builder) => {
     builder
+      // Handle getAllUsersAsync cases
       .addCase(getAllUsersAsync.pending, (state) => {
         state.status = "loading";
-        // Removed isLoading
       })
       .addCase(getAllUsersAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.users = action.payload;
-        // Removed isLoading
       })
       .addCase(getAllUsersAsync.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
-        // Removed isLoading
       })
-      // Handling loginAsync cases
+      // Handle loginAsync cases
       .addCase(loginAsync.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(loginAsync.fulfilled, (state) => {
+      .addCase(loginAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        // Handle successful login if needed (e.g., setting user data, token, etc.)
+        state.user = action.payload; // Store user data on successful login
       })
       .addCase(loginAsync.rejected, (state, action) => {
         state.status = "failed";
@@ -74,10 +79,12 @@ export const authSlice = createSlice({
   },
 });
 
-export const { resetMessages } = authSlice.actions;
+export const { resetMessages, logout } = authSlice.actions;
 
+// Selectors
 export const selectUsers = (state) => state.auth.users;
 export const selectUsersStatus = (state) => state.auth.status;
 export const selectUserError = (state) => state.auth.error;
+export const selectLoggedInUser = (state) => state.auth.user;
 
 export default authSlice.reducer;

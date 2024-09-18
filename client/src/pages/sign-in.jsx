@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { FcGoogle } from "react-icons/fc";
 import logo from '../assets/logo1.png';
-import { loginAsync, selectUsersStatus, selectUserError } from '../redux/auth/authSlices'; // Import from your slice
+import { loginAsync, selectUsersStatus, selectUserError } from '../redux/auth/authSlices';
 import SignInForm from '../components/sign-in-form';
 import { Button } from '@/components/ui/button';
 
@@ -13,8 +13,7 @@ const SignInPage = () => {
    const location = useLocation();
    const from = location.state?.from?.pathname || '/';
 
-   const status = useSelector(selectUsersStatus); // Fetch status from Redux
-   const error = useSelector(selectUserError); // Fetch any errors from Redux
+   const status = useSelector(selectUsersStatus);
 
    const {
       register,
@@ -23,18 +22,14 @@ const SignInPage = () => {
    } = useForm();
 
    const onSubmit = async (data) => {
-      console.log(data);
-
       try {
-         const res = await dispatch(loginAsync(data)).unwrap();
-         console.log("Login successful", res);
-
-         sessionStorage.setItem('user', JSON.stringify(res));
+         await dispatch(loginAsync(data)).unwrap();
          navigate(from, { replace: true });
       } catch (error) {
          console.log("Login failed", error);
       }
    };
+
 
    return (
       <main className='flex items-center justify-center min-h-screen'>
@@ -54,7 +49,7 @@ const SignInPage = () => {
                         register={register}
                         onSubmit={handleSubmit(onSubmit)}
                         errors={errors}
-                        isSubmitting={isSubmitting || status === 'loading'} // Disable submit if loading
+                        isSubmitting={isSubmitting || status === 'loading'}
                      />
                      <Button
                         variant="outline"

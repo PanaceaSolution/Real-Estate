@@ -35,9 +35,6 @@ export async function login(data) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    console.log("Redux", response);
-
-
     const responseData = await response.json();
     return responseData // Return the parsed data
 
