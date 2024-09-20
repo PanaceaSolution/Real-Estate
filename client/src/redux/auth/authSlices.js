@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllUsers, login } from "./authAPI";
+import { getAllUsers, deleteUsers, login, logout } from "./authAPI";
 
 const initialState = {
   status: "idle", // 'idle' | 'loading' | 'failed'
@@ -11,12 +11,25 @@ const initialState = {
 // AsyncThunk for fetching users
 export const getAllUsersAsync = createAsyncThunk(
   "auth/getAllUsers",
-  async (token, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const response = await getAllUsers(token);
+      const response = await getAllUsers();
       return response;
     } catch (error) {
       return rejectWithValue(error.message || "Failed to fetch users");
+    }
+  }
+);
+
+//AsyncThunk for deleting users
+export const deleteUsersAsync = createAsyncThunk(
+  "auth/deleteUsers",
+  async ({ id }, { rejectWithValue }) => {
+    try {
+      await deleteUsers({ id });
+      return id; // Return the deleted user ID or other useful info
+    } catch (error) {
+      return rejectWithValue(error.message || "Failed to delete users");
     }
   }
 );
@@ -41,9 +54,9 @@ export const loginAsync = createAsyncThunk(
 // AsyncThunk for logout
 export const logoutAsync = createAsyncThunk(
   "auth/logout",
-  async (storedToken, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      await logout(storedToken)
+      await logout();
       return;
     } catch (error) {
       return rejectWithValue(error.message || "Failed to log out");
@@ -59,7 +72,7 @@ export const authSlice = createSlice({
     resetMessages: (state) => {
       state.error = null;
     },
-    logout: (state) => {
+    clearUser: (state) => {  // Renamed from 'logout'
       state.user = null; // Reset user state on logout
     },
   },
@@ -104,7 +117,7 @@ export const authSlice = createSlice({
   },
 });
 
-export const { resetMessages, logout } = authSlice.actions;
+export const { resetMessages, clearUser } = authSlice.actions;  // Updated export
 
 // Selectors
 export const selectUsers = (state) => state.auth.users;
