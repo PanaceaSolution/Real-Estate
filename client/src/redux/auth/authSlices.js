@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllUsers, deleteUsers, login, logout } from "./authAPI";
+import { getAllUsers, deleteUserById, login, logout, updateUserById } from "./authAPI";
 
 const initialState = {
   status: "idle", // 'idle' | 'loading' | 'failed'
@@ -22,17 +22,32 @@ export const getAllUsersAsync = createAsyncThunk(
 );
 
 //AsyncThunk for deleting users
-export const deleteUsersAsync = createAsyncThunk(
-  "auth/deleteUsers",
-  async ({ id }, { rejectWithValue }) => {
+export const deleteUserByIdAsync = createAsyncThunk(
+  "auth/deleteUserById",
+  async (id, { rejectWithValue }) => {
     try {
-      await deleteUsers({ id });
-      return id; // Return the deleted user ID or other useful info
+      await deleteUserById(id);
+      return id;
     } catch (error) {
       return rejectWithValue(error.message || "Failed to delete users");
     }
   }
 );
+
+//AsyncThunk for updating users
+export const updateUserByIdAsync = createAsyncThunk(
+  "auth/updateUserById",
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await updateUserById(formData);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.message || "Failed to delete users");
+    }
+  }
+);
+
+
 
 // AsyncThunk for login
 export const loginAsync = createAsyncThunk(
@@ -72,8 +87,8 @@ export const authSlice = createSlice({
     resetMessages: (state) => {
       state.error = null;
     },
-    clearUser: (state) => {  // Renamed from 'logout'
-      state.user = null; // Reset user state on logout
+    clearUser: (state) => {
+      state.user = null;
     },
   },
   extraReducers: (builder) => {
@@ -89,6 +104,10 @@ export const authSlice = createSlice({
       .addCase(getAllUsersAsync.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
+      })
+      .addCase(updateUserByIdAsync.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload || "Failed to update user";
       })
       // Handle loginAsync cases
       .addCase(loginAsync.pending, (state) => {

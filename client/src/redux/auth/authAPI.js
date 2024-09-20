@@ -30,7 +30,7 @@ export async function getAllUsers() {
 
 
 // Delete User
-export async function deleteUsers({ id }) {
+export async function deleteUserById(id) {
   try {
     const response = await fetch(`${apiUrl}/profile/${id}`, {
       method: "DELETE",
@@ -41,6 +41,23 @@ export async function deleteUsers({ id }) {
 
     await checkResponse(response); // Validate response
 
+  } catch (error) {
+    return Promise.reject(error); // Return the error as rejected promise
+  }
+}
+
+// Update User
+export async function updateUserById(formData) {
+  try {
+    const response = await fetch(`${apiUrl}/profile/${formData.get('id')}`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${storedToken}`,
+      },
+      body: formData,
+    });
+
+    return await checkResponse(response); // Validate and return the response data
   } catch (error) {
     return Promise.reject(error); // Return the error as rejected promise
   }

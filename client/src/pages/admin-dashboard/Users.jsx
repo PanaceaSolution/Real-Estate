@@ -9,9 +9,8 @@ import {
 // import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUsers, selectUsersStatus, getAllUsersAsync, } from '@/redux/auth/authSlices';
+import { selectUsers, selectUsersStatus, getAllUsersAsync, deleteUserByIdAsync, updateUserByIdAsync, } from '@/redux/auth/authSlices';
 import UsersTable from '@/components/admin/users-table';
-import Cookies from 'js-cookie';
 
 const Users = () => {
    const dispatch = useDispatch();
@@ -21,13 +20,20 @@ const Users = () => {
    const [searchQuery, setSearchQuery] = useState("");
    // const [statusFilter, setStatusFilter] = useState("");
 
-   const storedToken = Cookies.get('token');
-
    useEffect(() => {
-      if (storedToken && status === "idle") {
-         dispatch(getAllUsersAsync(storedToken));
+      if (status === "idle") {
+         dispatch(getAllUsersAsync());
       }
-   }, [storedToken, dispatch]);
+   }, [dispatch]);
+
+   const handleUpdate = (formData) => {
+      dispatch(updateUserByIdAsync(formData));
+   };
+
+
+   const handleDelete = (id) => {
+      dispatch(deleteUserByIdAsync(id));
+   }
 
    const filteredUsers = users
       .filter((u) => {
@@ -37,41 +43,11 @@ const Users = () => {
       })
       .sort((a, b) => b.id - a.id);
 
+
+
+
    return (
       <main className='w-full bg-base space-y-10'>
-         {/* <div className="grid grid-cols-4 xl:grid-cols-6 gap-4">
-            <Card>
-               <CardHeader>
-                  <CardTitle className="text-primary">{users.length}</CardTitle>
-               </CardHeader>
-               <CardContent>Total Users</CardContent>
-            </Card>
-            <Card>
-               <CardHeader>
-                  <CardTitle className="text-green-700">
-                     {users.filter(user => user.status === 'Verified').length}
-                  </CardTitle>
-               </CardHeader>
-               <CardContent>Verified Users</CardContent>
-            </Card>
-            <Card>
-               <CardHeader>
-                  <CardTitle className="text-yellow-500">
-                     {users.filter(user => user.status === 'Pending').length}
-                  </CardTitle>
-               </CardHeader>
-               <CardContent>Pending Users</CardContent>
-            </Card>
-            <Card>
-               <CardHeader>
-                  <CardTitle className="text-destructive">
-                     {users.filter(user => user.status === 'Rejected').length}
-                  </CardTitle>
-               </CardHeader>
-               <CardContent>Rejected Users</CardContent>
-            </Card>
-         </div> */}
-
          <Card>
             <CardHeader>
                <CardTitle className="text-4xl font-bold">
@@ -108,6 +84,8 @@ const Users = () => {
             <CardContent>
                <UsersTable
                   filteredUsers={filteredUsers}
+                  handleUpdate={handleUpdate}
+                  handleDelete={handleDelete}
                />
             </CardContent>
          </Card>
