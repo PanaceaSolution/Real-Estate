@@ -26,7 +26,6 @@ const Navbar = () => {
    const user = useSelector(selectLoggedInUser)
    const { token } = useAuth();
 
-
    const [searchQuery, setSearchQuery] = useState('');
 
    const handleSearchChange = (e) => {
