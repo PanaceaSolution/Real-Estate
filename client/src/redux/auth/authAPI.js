@@ -45,12 +45,12 @@ export async function login(data) {
   }
 }
 
-export async function logout(storedToken) {
+export async function logout(token) {
   try {
     const response = await fetch(`${apiUrl}/auth/logout`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${storedToken}`,
+        Authorization: `Bearer ${token}`,
       },
       // credentials: "include",
     });

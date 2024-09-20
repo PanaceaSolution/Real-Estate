@@ -1,30 +1,15 @@
 import { Menu, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import {
-   DropdownMenu,
-   DropdownMenuContent,
-   DropdownMenuItem,
-   DropdownMenuLabel,
-   DropdownMenuSeparator,
-   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Link, useLocation, useNavigate } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
-import { logoutAsync, selectLoggedInUser } from "@/redux/auth/authSlices"
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
-
 import logo from '../assets/logo1.png'
-import { useAuth } from "@/context/AuthContext"
 import { useState } from "react"
+import UserAvatar from "./user-avatar"
 
 const Navbar = () => {
-   const dispatch = useDispatch();
    const navigate = useNavigate();
    const location = useLocation();
-   const user = useSelector(selectLoggedInUser)
-   const { token } = useAuth();
 
    const [searchQuery, setSearchQuery] = useState('');
 
@@ -48,20 +33,9 @@ const Navbar = () => {
       return location.pathname === path ? 'text-foreground' : 'text-muted-foreground hover:text-foreground';
    };
 
-   const handleLogout = async () => {
-      if (token) {
-         try {
-            await dispatch(logoutAsync(token));
-            Cookies.remove('token');
-            navigate('/sign-in');
-         } catch (error) {
-            console.error('Logout failed:', error);
-         }
-      }
-   };
    return (
-      <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 z-20">
-         <nav className="hidden gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 lg:gap-8">
+      <nav className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 z-20">
+         <div className="hidden gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 lg:gap-8">
             <Link
                href="/"
             >
@@ -77,7 +51,7 @@ const Navbar = () => {
                   {li.name}
                </Link>
             ))}
-         </nav>
+         </div>
          <Sheet>
             <SheetTrigger asChild>
                <Button
@@ -123,53 +97,9 @@ const Navbar = () => {
                   />
                </div>
             </form>
-            {user
-               ? <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                     <Avatar className="cursor-pointer">
-                        <AvatarImage src={user?.image} alt={user?.name} />
-                        <AvatarFallback className="font-semibold bg-primary text-white uppercase">
-                           {user.name.charAt(0)}
-                        </AvatarFallback>
-                     </Avatar>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                     <DropdownMenuLabel className="capitalize">
-                        {user.name}
-                     </DropdownMenuLabel>
-                     <DropdownMenuSeparator />
-                     <DropdownMenuItem asChild>
-                        <Link to='/dashboard'>
-                           Profile
-                        </Link>
-                     </DropdownMenuItem>
-                     {user?.role === 'admin' &&
-                        <DropdownMenuItem asChild>
-                           <Link to="/admin/users">
-                              Admin Dashboard
-                           </Link>
-                        </DropdownMenuItem>
-                     }
-                     <DropdownMenuSeparator />
-                     <DropdownMenuItem>
-                        <Button
-                           variant="destructive"
-                           className="w-full"
-                           onClick={handleLogout}
-                        >
-                           Logout
-                        </Button>
-                     </DropdownMenuItem>
-                  </DropdownMenuContent>
-               </DropdownMenu>
-               : <Link to="/sign-in">
-                  <Button size="sm">
-                     Sign In
-                  </Button>
-               </Link>
-            }
+            <UserAvatar />
          </div>
-      </header>
+      </nav>
    )
 }
 

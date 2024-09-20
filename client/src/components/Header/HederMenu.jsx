@@ -1,13 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { House, Menu, X } from "lucide-react";
-import ProfileDropdown from "../Profile/ProfileDropdown";
+import UserAvatar from "../user-avatar";
 
 const HeaderMenu = ({ sidebarOpen, setSidebarOpen }) => {
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
-
 
   return (
     <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -39,7 +38,7 @@ const HeaderMenu = ({ sidebarOpen, setSidebarOpen }) => {
               </h1>
             </Link>
           </div>
-          <ProfileDropdown />
+          <UserAvatar />
         </div>
       </div>
     </nav>
