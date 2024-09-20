@@ -17,19 +17,28 @@ const Sidebar = () => {
    }
 
    return (
-      <aside className="grid gap-4 text-sm">
 
-         {links.map((li) => (
-            <Link
-               key={li.path}
-               className={`${isActive(li.path)} text-lg font-medium px-4 py-2 rounded-2xl flex items-center gap-2`}
-               to={li.path}
-            >
-               {li.icon}
-               {li.name}
-            </Link>
-         ))}
+      <aside className='fixed bg-white p-4 border-r h-screen'>
 
+         <h1 className="text-3xl font-bold flex gap-2 mb-6">
+            Admin
+            <span className="text-primary">Dashboard</span>
+         </h1>
+
+         <div className="space-y-4 text-sm">
+
+            {links.map((li) => (
+               <Link
+                  key={li.path}
+                  className={`${isActive(li.path)} text-lg font-medium px-4 py-2 rounded-2xl flex items-center gap-2 group`}
+                  to={li.path}
+               >
+                  <span className='group-hover:animate-bounce'>{li.icon}</span>
+                  {li.name}
+               </Link>
+            ))}
+
+         </div>
       </aside>
    )
 }
