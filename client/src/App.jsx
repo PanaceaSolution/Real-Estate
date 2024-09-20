@@ -19,7 +19,7 @@ import PageNotFound from './pages/page-not-found';
 const App = () => {
   return (
     <Router>
-      <div className="flex flex-col min-h-screen bg-base">
+      <div className="flex flex-col h-screen bg-base">
         <main className="flex-grow">
           <Routes>
             {/* Public Routes */}

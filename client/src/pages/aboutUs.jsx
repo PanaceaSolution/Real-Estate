@@ -3,9 +3,7 @@ import Aboutus from '../components/about-us'
 
 const aboutUs = () => {
   return (
-
-    <Aboutus/>
-    
+    <Aboutus />
   )
 }
 

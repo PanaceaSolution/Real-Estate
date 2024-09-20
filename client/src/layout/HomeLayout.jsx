@@ -1,6 +1,4 @@
 import { Outlet, useLocation } from "react-router-dom";
-
-import Header from "../components/header";
 import Footer from "../components/footer";
 import Navbar from "@/components/navbar";
 
@@ -14,11 +12,11 @@ const HomeLayout = () => {
     <div>
       {/* Render different content based on the route */}
       {isRootPath && (
-        <>
+        <div >
           <Navbar />
           <Outlet />
           <Footer />
-        </>
+        </div>
       )}
     </div>
   );
