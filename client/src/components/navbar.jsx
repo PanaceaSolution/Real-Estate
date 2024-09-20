@@ -123,7 +123,7 @@ const Navbar = () => {
                   />
                </div>
             </form>
-            {user && token
+            {user
                ? <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                      <Avatar className="cursor-pointer">

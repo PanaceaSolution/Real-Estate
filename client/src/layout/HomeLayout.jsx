@@ -1,23 +1,18 @@
 import { Outlet, useLocation } from "react-router-dom";
 import Footer from "../components/footer";
 import Navbar from "@/components/navbar";
+import Home from "@/pages/home";
 
 const HomeLayout = () => {
   const location = useLocation();
-
-  // Check if the current path is one of the specified paths
-  const isRootPath = ['/', '/aboutUs', '/search'].includes(location.pathname);
-
+  const isRootPath = location.pathname === "/";
+  const isAdmin = location.pathname.startsWith("/admin");
+  console.log(isAdmin)
   return (
     <div>
-      {/* Render different content based on the route */}
-      {isRootPath && (
-        <div >
-          <Navbar />
-          <Outlet />
-          <Footer />
-        </div>
-      )}
+
+      {isRootPath && [<Navbar />, <Home />, <Footer />]}
+      {!isRootPath && [<Navbar />, <Outlet />, <Footer />]}
     </div>
   );
 };

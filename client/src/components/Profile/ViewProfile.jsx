@@ -1,34 +1,26 @@
-import React, { useEffect, memo } from "react";
+import React, { useEffect, useState } from "react";
+import EditProfileModal from "./EditProfileModal";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  selectUserError,
   getAllUsersAsync,
   selectUsers,
+  selectUserError,
   selectUsersStatus,
 } from "../../redux/auth/authSlices";
-import Loadding from "../../common/Loadding";
 
-const ViewProfile = memo(() => {
+const ProfileSection = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+  //
   const dispatch = useDispatch();
-  const users = useSelector(selectUsers);
-  const status = useSelector(selectUsersStatus);
-  const error = useSelector(selectUserError);
-
   useEffect(() => {
     dispatch(getAllUsersAsync());
+  }, []);
 
-
-  }, [dispatch]);
-
-  if (status === "loading") {
-    return <Loadding />
-  }
-
-  if (status === "failed") {
-    return <div>Error: {error}</div>;
-  }
-  console.log(users)
-
+  const user=useSelector(selectUsers)
+  console.log(user)
   return (
     <section>
       <div className="max-w-7xl mx-auto p-4 rounded-md grid-cols-1 lg:grid-cols-3 gap-4 overflow-y-auto">
@@ -45,7 +37,10 @@ const ViewProfile = memo(() => {
                 <p className="font-semibold">Sukraj Chaudhary</p>
               </div>
             </div>
-            <button className="bg-primary h-9 w-24 rounded-2xl text-white">
+            <button
+              className="bg-primary h-9 w-24 rounded-md text-white"
+              onClick={openModal}
+            >
               Edit
             </button>
           </div>
@@ -74,8 +69,11 @@ const ViewProfile = memo(() => {
           </div>
         </div>
       </div>
+
+      {/* Modal */}
+      {isModalOpen && <EditProfileModal closeModal={closeModal} />}
     </section>
   );
-});
+};
 
-export default ViewProfile;
+export default ProfileSection;

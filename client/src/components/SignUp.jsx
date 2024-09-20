@@ -1,167 +1,129 @@
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { ArrowRight, Eye, EyeOff } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const SignUp = () => {
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+  // Initialize the useForm hook with validation rules
+  const { register, handleSubmit, formState: { errors }, watch } = useForm({
+    defaultValues: {
+      fullName: '',
+      email: '',
+      password: '',
+      confirmPassword: ''
+    }
   });
 
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
-  const [errors, setErrors] = useState({});
+  // State to manage password visibility
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.id]: e.target.value,
-    });
-  };
-
-  const validateForm = () => {
-    let validationErrors = {};
-    if (!formData.fullName) validationErrors.fullName = 'Full Name is required';
-    if (!formData.email) validationErrors.email = 'Email is required';
-    if (!formData.password) validationErrors.password = 'Password is required';
-    if (formData.password !== formData.confirmPassword)
-      validationErrors.confirmPassword = 'Passwords do not match';
-    return validationErrors;
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validateForm();
-    if (Object.keys(validationErrors).length === 0) {
-      console.log('Form Submitted:', formData);
-    } else {
-      setErrors(validationErrors);
-    }
+  // Handle form submission
+  const onSubmit = (data) => {
+    console.log(data);
+    // Perform sign-up logic here
   };
 
   return (
-    <section className='bg-slate-100'>
-      <div className="grid grid-cols-1 lg:grid-cols-2">
-        <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-10 lg:px-8 lg:py-24">
-          <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
-            <h2 className="text-3xl font-bold leading-tight text-black sm:text-4xl">Sign up</h2>
-            <p className="mt-2 text-base text-gray-600">
+    <div>
+      <section className="rounded-md">
+        <div className="flex items-center justify-center bg-white px-4 py-2 sm:px-6 sm:py-2 lg:px-8">
+          <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md border-2 rounded-md p-5">
+            <h2 className="text-2xl font-bold leading-tight text-black">Sign up to create an account</h2>
+            <p className="mt-1 text-base text-gray-600">
               Already have an account?{' '}
-              <a
-                href="#"
-                title=""
+              <Link
+                to="/sign-in"
                 className="font-medium text-black transition-all duration-200 hover:underline"
               >
                 Sign In
-              </a>
+              </Link>
             </p>
-            <form action="#" method="POST" className="mt-4" onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)} className="mt-8">
               <div className="space-y-5">
                 <div>
-                  <label htmlFor="fullName" className="text-base font-medium text-gray-900">
-                    Full Name
-                  </label>
+                  <label htmlFor="name" className="text-base font-medium text-gray-900">Full Name</label>
                   <div className="mt-2">
                     <input
-                      className={`flex h-10 w-full rounded-md border ${
-                        errors.fullName ? 'border-red-500' : 'border-gray-300'
-                      } bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 ${
-                        errors.fullName ? 'focus:ring-red-500' : 'focus:ring-gray-400'
-                      }`}
+                      {...register('fullName', { required: 'Full Name is required' })}
+                      className={`flex h-10 w-full rounded-md border px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 ${errors.fullName ? 'border-red-500' : 'border-gray-300'}`}
                       type="text"
                       placeholder="Full Name"
-                      id="fullName"
-                      value={formData.fullName}
-                      onChange={handleChange}
+                      id="name"
                     />
-                    {errors.fullName && (
-                      <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>
-                    )}
+                    {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName.message}</p>}
                   </div>
                 </div>
                 <div>
-                  <label htmlFor="email" className="text-base font-medium text-gray-900">
-                    Email address
-                  </label>
+                  <label htmlFor="email" className="text-base font-medium text-gray-900">Email address</label>
                   <div className="mt-2">
                     <input
-                      className={`flex h-10 w-full rounded-md border ${
-                        errors.email ? 'border-red-500' : 'border-gray-300'
-                      } bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 ${
-                        errors.email ? 'focus:ring-red-500' : 'focus:ring-gray-400'
-                      }`}
+                      {...register('email', {
+                        required: 'Email is required',
+                        pattern: {
+                          value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                          message: 'Invalid email address'
+                        }
+                      })}
+                      className={`flex h-10 w-full rounded-md border px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
                       type="email"
                       placeholder="Email"
                       id="email"
-                      value={formData.email}
-                      onChange={handleChange}
                     />
-                    {errors.email && (
-                      <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-                    )}
+                    {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
                   </div>
                 </div>
                 <div>
                   <div className="flex items-center justify-between">
-                    <label htmlFor="password" className="text-base font-medium text-gray-900">
-                      Password
-                    </label>
-                    <button
-                      type="button"
-                      className="text-sm text-gray-600 hover:underline"
-                      onClick={() => setPasswordVisible(!passwordVisible)}
-                    >
-                      {passwordVisible ? 'Hide' : 'Show'}
-                    </button>
+                    <label htmlFor="password" className="text-base font-medium text-gray-900">Password</label>
                   </div>
                   <div className="mt-2 relative">
                     <input
-                      className={`flex h-10 w-full rounded-md border ${
-                        errors.password ? 'border-red-500' : 'border-gray-300'
-                      } bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 ${
-                        errors.password ? 'focus:ring-red-500' : 'focus:ring-gray-400'
-                      }`}
-                      type={passwordVisible ? 'text' : 'password'}
+                      {...register('password', {
+                        required: 'Password is required',
+                        pattern: {
+                          value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
+                          message: 'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number'
+                        }
+                      })}
+                      className={`flex h-10 w-full rounded-md border px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
+                      type={showPassword ? 'text' : 'password'}
                       placeholder="Password"
                       id="password"
-                      value={formData.password}
-                      onChange={handleChange}
                     />
-                    {errors.password && (
-                      <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-                    )}
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute inset-y-0 right-3 flex items-center cursor-pointer"
+                    >
+                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                    {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
                   </div>
                 </div>
                 <div>
                   <div className="flex items-center justify-between">
-                    <label htmlFor="confirmPassword" className="text-base font-medium text-gray-900">
-                      Confirm Password
-                    </label>
-                    <button
-                      type="button"
-                      className="text-sm text-gray-600 hover:underline"
-                      onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
-                    >
-                      {confirmPasswordVisible ? 'Hide' : 'Show'}
-                    </button>
+                    <label htmlFor="confirmPassword" className="text-base font-medium text-gray-900">Confirm Password</label>
                   </div>
                   <div className="mt-2 relative">
                     <input
-                      className={`flex h-10 w-full rounded-md border ${
-                        errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
-                      } bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 ${
-                        errors.confirmPassword ? 'focus:ring-red-500' : 'focus:ring-gray-400'
-                      }`}
-                      type={confirmPasswordVisible ? 'text' : 'password'}
+                      {...register('confirmPassword', {
+                        required: 'Please confirm your password',
+                        validate: value => value === watch('password') || 'Passwords do not match'
+                      })}
+                      className={`flex h-10 w-full rounded-md border px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'}`}
+                      type={showConfirmPassword ? 'text' : 'password'}
                       placeholder="Confirm Password"
                       id="confirmPassword"
-                      value={formData.confirmPassword}
-                      onChange={handleChange}
                     />
-                    {errors.confirmPassword && (
-                      <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>
-                    )}
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      className="absolute inset-y-0 right-3 flex items-center cursor-pointer"
+                    >
+                      {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                    {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword.message}</p>}
                   </div>
                 </div>
                 <div>
@@ -177,7 +139,7 @@ const SignUp = () => {
             <div className="mt-3 space-y-3">
               <button
                 type="button"
-                className="relative inline-flex w-full items-center justify-center rounded-md border border-gray-400 bg-white px-3.5 py-2.5 font-semibold text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:text-black focus:bg-gray-100 focus:text-black focus:outline-none"
+                className="relative inline-flex w-full items-center justify-center rounded-md border border-gray-400 bg-white px-3.5 py-2.5 font-semibold text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:text-black focus:bg-gray-100 focus:text-black"
               >
                 <span className="mr-2 inline-block">
                   <svg
@@ -194,16 +156,8 @@ const SignUp = () => {
             </div>
           </div>
         </div>
-        <div className="h-full w-full">
-          <img
-            loading="lazy"
-            className="mx-auto h-full w-full rounded-md object-cover"
-            src="https://img.freepik.com/free-photo/real-estate-housing-brokerage-concept_53876-120663.jpg?t=st=1725874120~exp=1725877720~hmac=ea75920a82c99bdd6d6e02b5f53e282c44b8e0cc7f6fd2bfe7e13dcfb5904e70&w=740"
-            alt=""
-          />
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 };
 
