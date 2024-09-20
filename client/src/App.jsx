@@ -1,7 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './components/header';
-import Footer from './components/footer';
 import AboutUs from './pages/AboutUs';
 import SignInPage from './pages/sign-in';
 import SignUp from './components/SignUp';
@@ -11,7 +9,6 @@ import Users from './pages/admin-dashboard/Users';
 import Properties from './pages/admin-dashboard/Properties';
 import AdminRoute from './routes/AdminRoute';
 import AdminLayout from './layout/AdminLayout';
-import AddProperty from './pages/add-property';
 import UserDashboard from './pages/Dashboard/UserDashboard';
 import DefaultLayout from './layout/DefaultLayout';
 import UserStats from './components/UserStats';
@@ -40,8 +37,6 @@ const App = () => {
               <Route element={<AdminLayout />}>
                 <Route path="/admin/users" element={<Users />} />
                 <Route path="/admin/properties" element={<Properties />} />
-                <Route path="/admin/add-property" element={<AddProperty />} />
-                <Route path="/admin/edit-property" element={<AddProperty />} />
               </Route>
             </Route>
 
