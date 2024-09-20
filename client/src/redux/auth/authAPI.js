@@ -17,11 +17,4 @@ export async function getAllUsers() {
   }
 }
 
-export async function register(data) {
-  try {
-  // apicall
-  } catch (error) {
 
-
-  }
-}

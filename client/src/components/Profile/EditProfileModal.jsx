@@ -25,8 +25,9 @@ const EditProfileModal = ({ closeModal }) => {
   };
 
   return (
-    <div
-      className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50"
+   <section>
+     <div
+      className="fixed  p-4 lg:p-0 inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50"
       onClick={closeModal}
     >
       <div
@@ -130,6 +131,7 @@ const EditProfileModal = ({ closeModal }) => {
         </form>
       </div>
     </div>
+   </section>
   );
 };
 

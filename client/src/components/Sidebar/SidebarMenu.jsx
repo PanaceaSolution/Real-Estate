@@ -35,7 +35,7 @@ const SidebarMenu = ({ sidebarOpen, setSidebarOpen }) => {
       aria-label="Sidebar"
     >
       <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
-        <ul className="space-y-2 font-medium">
+        <ul className="space-y-4 font-medium">
           <li>
             <Link
               to="/dashboard"
@@ -43,7 +43,7 @@ const SidebarMenu = ({ sidebarOpen, setSidebarOpen }) => {
                 location.pathname === "/dashboard"
                   ? "bg-red-300 hover:bg-red-500"
                   : ""
-              }group flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group`}
+              }group flex items-center border p-2 text-gray-900 rounded-md dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group`}
             >
               <LayoutDashboard className="w-5 h-5 group-hover:animate-bounce text-black transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
               <span className="ms-3">Profile</span>
@@ -56,7 +56,7 @@ const SidebarMenu = ({ sidebarOpen, setSidebarOpen }) => {
                 location.pathname.startsWith("/add-property")
                   ? "bg-red-600 hover:bg-red-500"
                   : ""
-              } flex items-center group p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group`}
+              } flex items-center group p-2 border text-gray-900 rounded-md dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group`}
             >
             
               <Blocks className="flex-shrink-0 group-hover:animate-bounce w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
@@ -72,7 +72,7 @@ const SidebarMenu = ({ sidebarOpen, setSidebarOpen }) => {
                 location.pathname.startsWith("/user-stats")
                   ? "bg-red-300 hover:bg-red-500"
                   : ""
-              } flex items-center group p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group`}
+              } flex items-center group border p-2 text-gray-900 rounded-md dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group`}
             >
               <ChartNoAxesColumnIncreasing className="flex-shrink-0 group-hover:animate-bounce w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
               <span className="flex-1 ms-3 whitespace-nowrap">
@@ -88,7 +88,7 @@ const SidebarMenu = ({ sidebarOpen, setSidebarOpen }) => {
                 location.pathname.startsWith("/view-property")
                   ? "bg-red-600 hover:bg-red-500"
                   : ""
-              } flex items-center group p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group`}
+              } flex items-center group border-2 p-2 text-gray-900 rounded-md dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group`}
             >
               
               <Eye className="flex-shrink-0 group-hover:animate-bounce w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
@@ -102,10 +102,10 @@ const SidebarMenu = ({ sidebarOpen, setSidebarOpen }) => {
                 location.pathname.startsWith("/setting")
                   ? "bg-red-600 hover:bg-red-500"
                   : ""
-              } flex items-center group p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group`}
+              } flex items-center border-2 group p-2 text-gray-900 rounded-md dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group`}
             >
-              <Settings className="flex-shrink-0 group-hover:animate-bounce w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-              <span className="flex-1 ms-3 whitespace-nowrap">Setting</span>
+              <Settings className=" flex-shrink-0 group-hover:animate-bounce w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+              <span className="border-l-2 pl-1 border-blue-500 flex-1 ms-3 whitespace-nowrap">Setting</span>
             </Link>
           </li>
         </ul>
