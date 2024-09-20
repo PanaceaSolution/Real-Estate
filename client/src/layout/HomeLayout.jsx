@@ -2,6 +2,7 @@ import { Outlet, useLocation } from "react-router-dom";
 
 import Header from "../components/header";
 import Footer from "../components/footer";
+import Navbar from "@/components/navbar";
 
 const HomeLayout = () => {
   const location = useLocation();
@@ -14,7 +15,7 @@ const HomeLayout = () => {
       {/* Render different content based on the route */}
       {isRootPath && (
         <>
-          <Header />
+          <Navbar />
           <Outlet />
           <Footer />
         </>

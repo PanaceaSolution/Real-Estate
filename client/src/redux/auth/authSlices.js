@@ -11,11 +11,9 @@ const initialState = {
 // AsyncThunk for fetching users
 export const getAllUsersAsync = createAsyncThunk(
   "auth/getAllUsers",
-  async (id, { rejectWithValue }) => {
+  async (token, { rejectWithValue }) => {
     try {
-      const response = await getAllUsers(id);
-      console.log(response);
-
+      const response = await getAllUsers(token);
       return response;
     } catch (error) {
       return rejectWithValue(error.message || "Failed to fetch users");
@@ -36,6 +34,19 @@ export const loginAsync = createAsyncThunk(
       }
     } catch (error) {
       return rejectWithValue(error.message || "Failed to log in");
+    }
+  }
+);
+
+// AsyncThunk for logout
+export const logoutAsync = createAsyncThunk(
+  "auth/logout",
+  async (storedToken, { rejectWithValue }) => {
+    try {
+      await logout(storedToken)
+      return;
+    } catch (error) {
+      return rejectWithValue(error.message || "Failed to log out");
     }
   }
 );
@@ -75,6 +86,18 @@ export const authSlice = createSlice({
         state.user = action.payload; // Store user data on successful login
       })
       .addCase(loginAsync.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      // Handle logoutAsync cases
+      .addCase(logoutAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(logoutAsync.fulfilled, (state) => {
+        state.status = "idle";
+        state.user = null; // Clear user data on successful logout
+      })
+      .addCase(logoutAsync.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });

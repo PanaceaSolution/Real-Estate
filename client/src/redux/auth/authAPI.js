@@ -1,12 +1,13 @@
 const apiUrl = import.meta.env.VITE_API_URL;
 
-export async function getAllUsers(id) {
+export async function getAllUsers(storedToken) {
   try {
     const response = await fetch(`${apiUrl}/profile/user`, {
       method: "GET",
       headers: {
-        'Authorization': `Bearer ${id}`,
+        Authorization: `Bearer ${storedToken}`,
       },
+      // credentials: "include",
     });
 
     if (!response.ok) {
@@ -28,6 +29,7 @@ export async function login(data) {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify(data), // Convert data to JSON string
     });
 
@@ -40,5 +42,26 @@ export async function login(data) {
 
   } catch (error) {
     return Promise.reject(error); // Reject the promise with the error
+  }
+}
+
+export async function logout(storedToken) {
+  try {
+    const response = await fetch(`${apiUrl}/auth/logout`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${storedToken}`,
+      },
+      // credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+  } catch (error) {
+    // Handle errors (e.g., log them)
+    console.error("Logout failed:", error);
+    return Promise.reject(error); // Optionally reject the promise
   }
 }
