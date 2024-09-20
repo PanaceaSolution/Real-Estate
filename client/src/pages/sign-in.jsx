@@ -2,10 +2,10 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { FcGoogle } from "react-icons/fc";
-import logo from '../assets/logo1.png';
 import { loginAsync, selectUsersStatus } from '../redux/auth/authSlices';
 import SignInForm from '../components/sign-in-form';
 import { Button } from '@/components/ui/button';
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 const SignInPage = () => {
    const dispatch = useDispatch();
@@ -36,10 +36,11 @@ const SignInPage = () => {
          <div className="w-full h-screen lg:grid lg:grid-cols-3">
 
             <div className="col-span-1 flex items-center justify-center py-12 relative h-full">
-               <Link to="/">
-                  <img src={logo} alt="Logo" className="absolute -top-10 -left-10 w-48 h-48" />
-               </Link>
                <div className="mx-auto grid w-[350px] gap-6">
+                  <Button className='w-28 flex items-center gap-1' size="sm" variant="outline" onClick={() => navigate(-1)}>
+                     <IoMdArrowRoundBack size={20} />
+                     Go Back
+                  </Button>
                   <div className="grid gap-2">
                      <h1 className='text-4xl text-primary font-bold'>Login</h1>
                      <p className="text-gray-500">Sign in to your account</p>
@@ -49,7 +50,7 @@ const SignInPage = () => {
                         register={register}
                         onSubmit={handleSubmit(onSubmit)}
                         errors={errors}
-                        isSubmitting={isSubmitting || status === 'loading'}
+                        isSubmitting={isSubmitting}
                      />
                      <Button
                         variant="outline"
