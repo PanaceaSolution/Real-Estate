@@ -50,6 +50,8 @@ export async function updateProduct(req, res) {
   const { name, description, price, address} = req.body;
   const userId=req.user.id;
 
+  
+
   const product = await Product.findById(id);
 
   if (!product) {
@@ -149,7 +151,7 @@ export const getallProducts = async (req, res) => {
 export const getSingleProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const product = await Product.findById(id);
+      const product = await Product.findById(id);
     if (!product) {
       return res.status(404).json({ msg: "Product not found" });
     }

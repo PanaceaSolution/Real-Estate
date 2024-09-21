@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import Quill styles
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   createProductAsync,
   resetMessages,
@@ -27,7 +28,7 @@ const AddProperty = () => {
   const dispatch = useDispatch();
   const loading = useSelector(selectPropertyStatus);
   const createdProduct = useSelector(selectProduct);
-
+  const navaigate=useNavigate()
   const onSubmit = async (data) => {
     const newData = new FormData();
     for (let d in data) {
@@ -36,6 +37,7 @@ const AddProperty = () => {
     newData.append("description", description);
     newData.append("image", imageFile);
     await dispatch(createProductAsync(newData));
+   
   };
 
   const handleImageUpload = (e) => {
@@ -59,7 +61,9 @@ const AddProperty = () => {
       setImageFile(null);
       setDescription(null) 
       dispatch(resetIsCreated());
+      navaigate("/view-property")
     }
+    
   }, [createdProduct, reset, dispatch]);
 
   return (
@@ -72,6 +76,7 @@ const AddProperty = () => {
         <div className="border-b border-gray-900/10 pb-10">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
             Add Your Property
+         
           </h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">
             Please carefully enter your details

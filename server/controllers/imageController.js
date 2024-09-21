@@ -30,7 +30,7 @@ export const uploadImage = async (req, res, next) => {
               .json({ message: "Failed to upload image to Cloudinary", error });
           }
           req.image_secure_url = result.secure_url;
-          req.public_id=result.public_id 
+          req.public_id = result.public_id;
           next();
         }
       )
@@ -80,7 +80,7 @@ export const updateImage = async (req, res, next) => {
             }
 
             req.image_secure_url = result.secure_url;
-            req.public_id=result.public_id 
+            req.public_id = result.public_id;
             next();
           }
         )
@@ -97,7 +97,7 @@ export const updateImage = async (req, res, next) => {
 //delete image
 export const deleteImage = async (req, res, next) => {
   try {
-    const { public_id } = req.body; // Assuming the client sends the public_id of the image to be deleted
+    const { public_id } = req.query;
 
     if (!public_id) {
       return res.status(400).json({ message: "No public_id provided" });
