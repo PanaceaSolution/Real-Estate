@@ -1,7 +1,8 @@
 import React from "react";
 import { Trash2 } from "lucide-react";
 import Pagination from "../common/Pagination";
-import { ownProperty } from "../redux/property/propertySlices";
+import { ownProperty ,selectPropertyStatus} from "../redux/property/propertySlices";
+import Loadding from "../common/Loadding";
 import { useSelector, useDispatch } from "react-redux";
 
 const getStatusColor = (status) => {
@@ -25,9 +26,11 @@ const BuyingStatusTable = () => {
     // Dispatch your delete action here
     // e.g., dispatch(deleteProductAsync(id));
   };
+  const loadding=useSelector(selectPropertyStatus)
 
   return (
     <>
+    {loadding && <Loadding/>}
       <section className="mx-auto w-full max-w-7xl px-4 py-4">
         <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
           <div>

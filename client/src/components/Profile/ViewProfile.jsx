@@ -1,12 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useCallback} from "react";
 import EditProfileModal from "./EditProfileModal";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  getAllUsersAsync,
-  selectUsers,
-  selectUserError,
-  selectUsersStatus,
-} from "../../redux/auth/authSlices";
+import { getOwnPropertyAsync } from "../../redux/property/propertySlices";
 
 const ProfileSection = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,12 +10,17 @@ const ProfileSection = () => {
   const closeModal = () => setIsModalOpen(false);
   //
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getAllUsersAsync());
-  }, []);
+  
 
-  const user=useSelector(selectUsers)
-  console.log(user)
+  const fetchOwnProperty = useCallback(() => {
+    dispatch(getOwnPropertyAsync());
+  }, [dispatch]);
+
+  useEffect(() => {
+    fetchOwnProperty();
+  }, [fetchOwnProperty]);
+
+ 
   return (
     <section>
       <div className="max-w-7xl mx-auto p-4 rounded-md grid-cols-1 lg:grid-cols-3 gap-4 overflow-y-auto">
