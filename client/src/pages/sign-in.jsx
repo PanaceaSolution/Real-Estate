@@ -2,7 +2,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { FcGoogle } from "react-icons/fc";
-import { loginAsync, selectUsersStatus } from '../redux/auth/authSlices';
+import { loginAsync, selectAuthStatus } from '../redux/auth/authSlices';
 import SignInForm from '../components/sign-in-form';
 import { Button } from '@/components/ui/button';
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -13,7 +13,7 @@ const SignInPage = () => {
    const location = useLocation();
    const from = location.state?.from?.pathname || '/';
 
-   const status = useSelector(selectUsersStatus);
+   const status = useSelector(selectAuthStatus);
 
    const {
       register,

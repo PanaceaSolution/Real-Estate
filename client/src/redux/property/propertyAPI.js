@@ -1,3 +1,7 @@
+import Cookies from "js-cookie";
+
+const token = Cookies.get("token");
+
 export async function createProduct(data) {
   try {
     const response = await fetch(
@@ -5,7 +9,7 @@ export async function createProduct(data) {
       {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${token}`,
         },
         credentials: "include",
         body: data,
@@ -32,7 +36,7 @@ export async function getOwnProperty() {
       {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${token}`,
         },
         credentials: "include",
       }
@@ -54,11 +58,11 @@ export async function getOwnProperty() {
 export async function getProductById(id) {
   try {
     const response = await fetch(
-      "http://localhost:5000/api/v1/products/"+id,
+      "http://localhost:5000/api/v1/products/" + id,
       {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${token}`,
         },
         credentials: "include"
       }
@@ -80,7 +84,6 @@ export async function getProductById(id) {
 
 export async function editProduct({ newData, id }) {
   try {
-    const token = localStorage.getItem("token");
     // if (!token) {
     //   throw new Error("User not authenticated");
     // }
@@ -118,7 +121,6 @@ export async function editProduct({ newData, id }) {
 
 export async function deleteProduct({ id, public_id }) {
   try {
-    const token = localStorage.getItem("token");
     // if (!token) {
     //   throw new Error("User not authenticated");
     // }

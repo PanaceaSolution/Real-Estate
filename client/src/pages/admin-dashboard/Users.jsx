@@ -6,45 +6,44 @@ import {
    CardHeader,
    CardTitle,
 } from "@/components/ui/card";
-// import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUsers, selectUsersStatus, getAllUsersAsync, deleteUserByIdAsync, updateUserByIdAsync, } from '@/redux/auth/authSlices';
+import {
+   selectUsers,
+   selectUserStatus,
+   getAllUsersAsync,
+   deleteUserByIdAsync,
+   updateUserByIdAsync,
+} from '../../redux/user/userSlices';
 import UsersTable from '@/components/admin/users-table';
 
 const Users = () => {
    const dispatch = useDispatch();
    const users = useSelector(selectUsers);
-   const status = useSelector(selectUsersStatus);
+   const status = useSelector(selectUserStatus);
 
    const [searchQuery, setSearchQuery] = useState("");
-   // const [statusFilter, setStatusFilter] = useState("");
 
+   // Fetch users only when status is 'idle'
    useEffect(() => {
       if (status === "idle") {
          dispatch(getAllUsersAsync());
       }
-   }, [dispatch]);
+   }, [status, dispatch]);
 
    const handleUpdate = (formData) => {
       dispatch(updateUserByIdAsync(formData));
    };
 
-
    const handleDelete = (id) => {
       dispatch(deleteUserByIdAsync(id));
-   }
+   };
 
    const filteredUsers = users
-      .filter((u) => {
-         const matchesSearch = u.name.toLowerCase().includes(searchQuery.toLowerCase());
-         // const matchesStatus = statusFilter === "all" || statusFilter === "" || u.status === statusFilter;
-         return matchesSearch;
-      })
+      ?.filter((user) =>
+         user.name.toLowerCase().includes(searchQuery.toLowerCase())
+      )
       .sort((a, b) => b.id - a.id);
-
-
-
 
    return (
       <main className='w-full bg-base space-y-10'>
@@ -65,20 +64,6 @@ const Users = () => {
                      value={searchQuery}
                      onChange={(e) => setSearchQuery(e.target.value)}
                   />
-                  {/* <Select
-                     value={statusFilter}
-                     onValueChange={(value) => setStatusFilter(value)}
-                  >
-                     <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Filter by status" />
-                     </SelectTrigger>
-                     <SelectContent>
-                        <SelectItem value="all">All</SelectItem>
-                        <SelectItem value="Verified">Verified</SelectItem>
-                        <SelectItem value="Pending">Pending</SelectItem>
-                        <SelectItem value="Rejected">Rejected</SelectItem>
-                     </SelectContent>
-                  </Select> */}
                </CardDescription>
             </CardHeader>
             <CardContent>

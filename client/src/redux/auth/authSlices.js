@@ -1,53 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllUsers, deleteUserById, login, logout, updateUserById } from "./authAPI";
+import { login, logout } from "./authAPI";
 
 const initialState = {
   status: "idle", // 'idle' | 'loading' | 'failed'
   error: null,
-  users: [],
-  user: null, // Add user to store logged-in user data
+  user: null, // Store logged-in user data
 };
-
-// AsyncThunk for fetching users
-export const getAllUsersAsync = createAsyncThunk(
-  "auth/getAllUsers",
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await getAllUsers();
-      return response;
-    } catch (error) {
-      return rejectWithValue(error.message || "Failed to fetch users");
-    }
-  }
-);
-
-//AsyncThunk for deleting users
-export const deleteUserByIdAsync = createAsyncThunk(
-  "auth/deleteUserById",
-  async (id, { rejectWithValue }) => {
-    try {
-      await deleteUserById(id);
-      return id;
-    } catch (error) {
-      return rejectWithValue(error.message || "Failed to delete users");
-    }
-  }
-);
-
-//AsyncThunk for updating users
-export const updateUserByIdAsync = createAsyncThunk(
-  "auth/updateUserById",
-  async (formData, { rejectWithValue }) => {
-    try {
-      const response = await updateUserById(formData);
-      return response;
-    } catch (error) {
-      return rejectWithValue(error.message || "Failed to delete users");
-    }
-  }
-);
-
-
 
 // AsyncThunk for login
 export const loginAsync = createAsyncThunk(
@@ -79,36 +37,20 @@ export const logoutAsync = createAsyncThunk(
   }
 );
 
-// Slice
+// Auth Slice
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    resetMessages: (state) => {
-      state.error = null;
-    },
     clearUser: (state) => {
       state.user = null;
+    },
+    resetMessages: (state) => {
+      state.error = null;
     },
   },
   extraReducers: (builder) => {
     builder
-      // Handle getAllUsersAsync cases
-      .addCase(getAllUsersAsync.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(getAllUsersAsync.fulfilled, (state, action) => {
-        state.status = "idle";
-        state.users = action.payload;
-      })
-      .addCase(getAllUsersAsync.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload;
-      })
-      .addCase(updateUserByIdAsync.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload || "Failed to update user";
-      })
       // Handle loginAsync cases
       .addCase(loginAsync.pending, (state) => {
         state.status = "loading";
@@ -121,13 +63,12 @@ export const authSlice = createSlice({
         state.status = "failed";
         state.error = action.payload;
       })
-      // Handle logoutAsync cases
       .addCase(logoutAsync.pending, (state) => {
         state.status = "loading";
       })
       .addCase(logoutAsync.fulfilled, (state) => {
         state.status = "idle";
-        state.user = null; // Clear user data on successful logout
+        state.user = null;
       })
       .addCase(logoutAsync.rejected, (state, action) => {
         state.status = "failed";
@@ -136,12 +77,11 @@ export const authSlice = createSlice({
   },
 });
 
-export const { resetMessages, clearUser } = authSlice.actions;  // Updated export
+export const { clearUser, resetMessages } = authSlice.actions;
 
 // Selectors
-export const selectUsers = (state) => state.auth.users;
-export const selectUsersStatus = (state) => state.auth.status;
-export const selectUserError = (state) => state.auth.error;
 export const selectLoggedInUser = (state) => state.auth.user;
+export const selectAuthStatus = (state) => state.auth.status;
+export const selectAuthError = (state) => state.auth.error;
 
 export default authSlice.reducer;
