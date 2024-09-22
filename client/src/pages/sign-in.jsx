@@ -24,7 +24,7 @@ const SignInPage = () => {
    const onSubmit = async (data) => {
       try {
          await dispatch(loginAsync(data)).unwrap();
-         navigate(from, { replace: true });
+         navigate(from || "/", { replace: true });
       } catch (error) {
          console.log("Login failed", error);
       }

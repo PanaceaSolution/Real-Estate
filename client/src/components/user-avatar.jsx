@@ -11,12 +11,13 @@ import { logoutAsync, selectLoggedInUser } from "@/redux/auth/authSlices"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
-
+import Cookies from 'js-cookie'
 
 const UserAvatar = () => {
    const user = useSelector(selectLoggedInUser)
    const dispatch = useDispatch();
    const navigate = useNavigate();
+   const token = Cookies.get('token')
 
    const handleLogout = async () => {
       try {
@@ -29,7 +30,7 @@ const UserAvatar = () => {
    };
    return (
       <>
-         {user
+         {user && token
             ? <DropdownMenu>
                <DropdownMenuTrigger asChild>
                   <Avatar className="cursor-pointer">
