@@ -2,15 +2,31 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ArrowRight, Eye, EyeOff } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectAuthStatus } from '@/redux/auth/authSlices';
+import { signupAsync } from '@/redux/auth/authSlices';
+
 
 const SignUp = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const status = useSelector(selectAuthStatus);
+
   // Initialize the useForm hook with validation rules
-  const { register, handleSubmit, formState: { errors }, watch } = useForm({
+  const { register, 
+    handleSubmit, 
+    formState: { errors },
+     watch } = useForm({
+
     defaultValues: {
-      fullName: '',
+      name: '',
+      lastName:'',
       email: '',
       password: '',
-      confirmPassword: ''
+      
     }
   });
 
@@ -19,10 +35,15 @@ const SignUp = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // Handle form submission
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
-    // Perform sign-up logic here
-  };
+    try {
+       await dispatch(signupAsync(data)).unwrap();
+       navigate("/");
+    } catch (error) {
+       console.log("signup failed", error);
+    }
+ };
 
   return (
     <div>
@@ -42,18 +63,33 @@ const SignUp = () => {
             <form onSubmit={handleSubmit(onSubmit)} className="mt-8">
               <div className="space-y-5">
                 <div>
-                  <label htmlFor="name" className="text-base font-medium text-gray-900">Full Name</label>
+                  <label htmlFor="name" className="text-base font-medium text-gray-900">First Name</label>
                   <div className="mt-2">
                     <input
-                      {...register('fullName', { required: 'Full Name is required' })}
+                      {...register('name', { required: 'First Name is required' })}
                       className={`flex h-10 w-full rounded-md border px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 ${errors.fullName ? 'border-red-500' : 'border-gray-300'}`}
                       type="text"
-                      placeholder="Full Name"
+                      placeholder="First Name"
                       id="name"
                     />
-                    {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName.message}</p>}
+                    {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
                   </div>
                 </div>
+
+                <div>
+                  <label htmlFor="name" className="text-base font-medium text-gray-900">Last Name</label>
+                  <div className="mt-2">
+                    <input
+                      {...register('lastName', { required: 'Last Name is required' })}
+                      className={`flex h-10 w-full rounded-md border px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 ${errors.fullName ? 'border-red-500' : 'border-gray-300'}`}
+                      type="text"
+                      placeholder="Last Name"
+                      id="name"
+                    />
+                    {errors.lastName && <p className="text-red-500 text-xs mt-1">{errors.lastName.message}</p>}
+                  </div>
+                </div>
+
                 <div>
                   <label htmlFor="email" className="text-base font-medium text-gray-900">Email address</label>
                   <div className="mt-2">
@@ -101,7 +137,7 @@ const SignUp = () => {
                     {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
                   </div>
                 </div>
-                <div>
+                {/* <div>
                   <div className="flex items-center justify-between">
                     <label htmlFor="confirmPassword" className="text-base font-medium text-gray-900">Confirm Password</label>
                   </div>
@@ -125,7 +161,7 @@ const SignUp = () => {
                     </button>
                     {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword.message}</p>}
                   </div>
-                </div>
+                </div> */}
                 <div>
                   <button
                     type="submit"

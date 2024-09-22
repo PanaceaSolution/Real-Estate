@@ -5,7 +5,7 @@ import { Toaster } from 'react-hot-toast';
 //Public pages
 import AboutUs from "./pages/AboutUs";
 import SignInPage from "./pages/sign-in";
-import SignUp from "./components/SignUp";
+import SignUp from "./pages/SignUp";
 import Home from "./pages/home";
 import Search from "./pages/search";
 import PageNotFound from "./pages/page-not-found";

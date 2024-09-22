@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { login, logout } from "./authAPI";
+import { login, logout, signup } from "./authAPI";
+
 
 const initialState = {
   status: "idle", // 'idle' | 'loading' | 'failed'
@@ -13,6 +14,23 @@ export const loginAsync = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await login(data);
+      if (response.user) {
+        return response.user; // Return the user data directly
+      } else {
+        throw new Error("No user data returned");
+      }
+    } catch (error) {
+      return rejectWithValue(error.message || "Failed to log in");
+    }
+  }
+);
+
+// AsyncThunk for Signup
+export const signupAsync = createAsyncThunk(
+  "auth/signup",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await signup(data);
       if (response.user) {
         return response.user; // Return the user data directly
       } else {
@@ -63,6 +81,20 @@ export const authSlice = createSlice({
         state.status = "failed";
         state.error = action.payload;
       })
+
+    // Handle SignupAsync cases
+    .addCase(signupAsync.pending, (state) => {
+      state.status = "loading";
+    })
+    .addCase(signupAsync.fulfilled, (state, action) => {
+      state.status = "idle";
+      state.user = action.payload; // Store user data on successful signup
+    })
+    .addCase(signupAsync.rejected, (state, action) => {
+      state.status = "failed";
+      state.error = action.payload;
+    })
+
       .addCase(logoutAsync.pending, (state) => {
         state.status = "loading";
       })

@@ -1,7 +1,9 @@
 import React from 'react';
 import { PropertyCard } from '../components/property-card';
-import { properties } from '../properties';
 import { useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllProductsAsync, selectAllProducts } from '../redux/property/propertySlices';
+import { useEffect } from 'react';
 
 
 const Search = () => {
@@ -9,9 +11,18 @@ const Search = () => {
   const params = new URLSearchParams(search);
   const searchName = params.get('q')
 
+  const dispatch = useDispatch();
+  const properties = useSelector(selectAllProducts);
+
+  useEffect(() => {
+     dispatch(getAllProductsAsync());
+  }, [dispatch]);
+
   const filteredProperties = properties.filter(property =>
-    property.title.toLowerCase().includes(searchName.toLowerCase())
+    property.name.toLowerCase().includes(searchName.toLowerCase())
   );
+
+
 
   return (
 

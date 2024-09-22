@@ -20,7 +20,7 @@ export const FeaturedSection = () => {
             <span className="text-primary"> Properties</span>
          </h2>
          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 xl:gap-10 mb-10">
-            {properties.slice(0, 4).map((p) => (
+            {properties.map((p) => (
                <PropertyCard
                   key={p.id}
                   {...p}

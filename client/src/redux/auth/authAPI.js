@@ -28,6 +28,23 @@ export async function login(data) {
   }
 }
 
+// signup
+export async function signup(data) {
+  try {
+    const response = await fetch(`${apiUrl}/auth/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(data),
+    });
+    return await checkResponse(response);
+  } catch (error) {
+    return Promise.reject(error); // Reject the promise with the error
+  }
+}
+
 // Logout
 export async function logout() {
   try {

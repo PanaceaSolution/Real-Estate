@@ -14,7 +14,7 @@ const Aboutus = () => {
         <h2 className="text-4xl md:text-6xl font-bold mb-8 md:mb-12 text-center">
           Hamro <span className="text-purple-800">Ghar Jaga</span>
         </h2>
-
+       
         <div className="max-w-3xl text-center mb-8 md:mb-12">
           <p>Hamro Ghar Jaga is a leading real estate business in Kathmandu, Nepal.
             They offer a wide range of properties, including homes, commercial spaces, and land.
