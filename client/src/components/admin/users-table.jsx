@@ -9,8 +9,9 @@ import {
 import { Button } from "../ui/button";
 import UsersDetailsModal from "./users-details-modal";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { MdDelete } from "react-icons/md";
 
-const UsersTable = ({ filteredUsers }) => {
+const UsersTable = ({ filteredUsers, handleUpdate, handleDelete }) => {
    return (
       <Table>
          <TableHeader>
@@ -56,8 +57,14 @@ const UsersTable = ({ filteredUsers }) => {
                         Verified
                      </Button>
                   </TableCell>
-                  <TableCell>
-                     <UsersDetailsModal u={u} />
+                  <TableCell className="space-x-2">
+                     <UsersDetailsModal
+                        u={u}
+                        handleUpdate={handleUpdate}
+                     />
+                     <Button variant="destructive" onClick={() => handleDelete(u._id)}>
+                        <MdDelete size={20} />
+                     </Button>
                   </TableCell>
                </TableRow>
             ))}

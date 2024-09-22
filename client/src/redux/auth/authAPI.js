@@ -1,27 +1,70 @@
+import Cookies from 'js-cookie';
+
+const storedToken = Cookies.get('token');
 const apiUrl = import.meta.env.VITE_API_URL;
 
-export async function getAllUsers(storedToken) {
+// Utility function to check for response errors
+const checkResponse = async (response) => {
+  if (!response.ok) {
+    const errorMessage = `HTTP error! Status: ${response.status}`;
+    throw new Error(errorMessage);
+  }
+  return response.json(); // Parse the response as JSON if status is OK
+};
+
+// Get All Users
+export async function getAllUsers() {
   try {
     const response = await fetch(`${apiUrl}/profile/user`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${storedToken}`,
       },
-      // credentials: "include",
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const responseData = await response.json();
-    return responseData; // Return the data
-
+    return await checkResponse(response); // Check and return the response data
   } catch (error) {
     return Promise.reject(error); // Reject the promise with the error
   }
 }
 
+
+// Delete User
+export async function deleteUserById(id) {
+  try {
+    const response = await fetch(`${apiUrl}/profile/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${storedToken}`,
+      },
+    });
+
+    await checkResponse(response); // Validate response
+
+  } catch (error) {
+    return Promise.reject(error); // Return the error as rejected promise
+  }
+}
+
+// Update User
+export async function updateUserById(formData) {
+  try {
+    const response = await fetch(`${apiUrl}/profile/${formData.get('id')}`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${storedToken}`,
+      },
+      body: formData,
+    });
+
+    return await checkResponse(response); // Validate and return the response data
+  } catch (error) {
+    return Promise.reject(error); // Return the error as rejected promise
+  }
+}
+
+
+//Login
 export async function login(data) {
   try {
     const response = await fetch(`${apiUrl}/auth/login`, {
@@ -30,38 +73,29 @@ export async function login(data) {
         "Content-Type": "application/json",
       },
       credentials: "include",
-      body: JSON.stringify(data), // Convert data to JSON string
+      body: JSON.stringify(data),
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const responseData = await response.json();
-    return responseData; // Return the parsed data
-
+    return await checkResponse(response); // Return the parsed data
   } catch (error) {
     return Promise.reject(error); // Reject the promise with the error
   }
 }
 
-export async function logout(token) {
+
+// Logout
+export async function logout() {
   try {
     const response = await fetch(`${apiUrl}/auth/logout`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${storedToken}`,
       },
-      // credentials: "include",
     });
+    Cookies.remove('token'); // Clear the token cookie
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
+    await checkResponse(response); // Validate response
   } catch (error) {
-    // Handle errors (e.g., log them)
-    console.error("Logout failed:", error);
-    return Promise.reject(error); // Optionally reject the promise
+    return Promise.reject(error); // Reject the promise with the error
   }
 }

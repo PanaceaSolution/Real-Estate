@@ -10,25 +10,22 @@ import {
 import { logoutAsync, selectLoggedInUser } from "@/redux/auth/authSlices"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { useDispatch, useSelector } from "react-redux"
-import { Link } from "react-router-dom"
-import { useAuth } from "@/context/AuthContext"
+import { Link, useNavigate } from "react-router-dom"
 
 
 const UserAvatar = () => {
    const user = useSelector(selectLoggedInUser)
    const dispatch = useDispatch();
-   const { token } = useAuth();
+   const navigate = useNavigate();
 
    const handleLogout = async () => {
-      if (token) {
-         try {
-            await dispatch(logoutAsync(token));
-            Cookies.remove('token');
-            navigate('/sign-in');
-         } catch (error) {
-            console.error('Logout failed:', error);
-         }
+      try {
+         await dispatch(logoutAsync());
+         navigate('/sign-in', { replace: true });
+      } catch (error) {
+         console.error('Logout failed:', error);
       }
+
    };
    return (
       <>
