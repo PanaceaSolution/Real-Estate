@@ -5,12 +5,14 @@ import {
   getProductById,
   editProduct,
   deleteProduct,
+  getAllProducts,
 } from "./propertyAPI";
 
 const initialState = {
   status: "idle",
   error: null,
   products: [],
+  allProducts: [],
   isLoading: false,
   isCreated: false,
   product: null,
@@ -79,6 +81,18 @@ export const deleteProductAsync = createAsyncThunk(
   }
 );
 
+export const getAllProductsAsync = createAsyncThunk(
+  "property/getAllProducts",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await getAllProducts();
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message || "Failed to get properties");
+    }
+  }
+);
+
 // Slice
 export const propertySlice = createSlice({
   name: "property",
@@ -125,6 +139,18 @@ export const propertySlice = createSlice({
       })
       .addCase(getOwnPropertyAsync.rejected, (state, action) => {
         state.isLoading = false;
+        state.error = action.payload;
+      })
+      //
+      .addCase(getAllProductsAsync.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getAllProductsAsync.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.allProducts = action.payload;
+      })
+      .addCase(getAllProductsAsync.rejected, (state, action) => {
+        state.isLoading = false
         state.error = action.payload;
       })
       //
@@ -181,7 +207,7 @@ export const propertySlice = createSlice({
         state.isLoading = false;
         state.error = action.payload || "Failed to delete product";
         state.isDeleted = false;
-      });
+      })
   },
 });
 
@@ -195,5 +221,6 @@ export const ownProperty = (state) => state.property.products;
 export const singleProperty = (state) => state.property.product;
 export const updateStatus = (state) => state.property.isUpdated;
 export const DeletedStatus = (state) => state.property.isDeleted;
+export const selectAllProducts = (state) => state.property.allProducts
 
 export default propertySlice.reducer;

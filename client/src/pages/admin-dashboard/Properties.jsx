@@ -1,108 +1,94 @@
-import { properties } from "../../properties";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import {
-   Table,
-   TableBody,
-   TableCaption,
-   TableCell,
-   TableHead,
-   TableHeader,
-   TableRow,
-} from "@/components/ui/table"
+import { useEffect, useState } from "react";
+
 import {
    Card,
    CardContent,
    CardDescription,
-   CardFooter,
    CardHeader,
    CardTitle,
-} from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+   DeletedStatus,
+   deleteProductAsync,
+   editProductAsync,
+   getAllProductsAsync,
+   resetIsDeleted,
+   selectAllProducts,
+   selectPropertyStatus,
+} from "@/redux/property/propertySlices";
+import PropertiesTable from "@/components/admin/properties-table";
+import Loadding from "@/common/Loadding";
+import toast from "react-hot-toast";
 
 export default function Component() {
    const [searchQuery, setSearchQuery] = useState("");
 
-   const handleEdit = (id) => {
-      console.log(id);
+   const dispatch = useDispatch();
+   const properties = useSelector(selectAllProducts);
+   const loading = useSelector(selectPropertyStatus);
+   const isDeleted = useSelector(DeletedStatus);
 
+   useEffect(() => {
+      dispatch(getAllProductsAsync());
+   }, [dispatch]);
+
+
+   const handleUpdate = (formData, id) => {
+      dispatch(editProductAsync(formData, id));
    };
+
+   const handleDelete = ({ id, public_id }) => {
+      dispatch(deleteProductAsync({ id, public_id }));
+   }
+
+   useEffect(() => {
+      if (isDeleted) {
+         toast.success("Deleted Successfully!");
+         dispatch(resetIsDeleted());
+      }
+   }, [isDeleted, dispatch]);
 
    // Handle search and sorting
    const filteredProperties = properties
       .filter((p) =>
-         p.title.toLowerCase().includes(searchQuery.toLowerCase())
+         p.name.toLowerCase().includes(searchQuery.toLowerCase())
       )
       .sort((a, b) => b.id - a.id); // Sort by biggest ID first
 
-   return (
-      <main className='w-full bg-base'>
-         <Card>
-            <CardHeader>
-               <CardTitle className="text-2xl font-bold">
-                  Property
-                  <span className="text-primary ml-2">Table</span>
-               </CardTitle>
-               <CardDescription className="pt-6 w-[300px]">
-                  {/* Search input */}
-                  <Input
-                     type="text"
-                     placeholder="Search properties..."
-                     className="px-4 py-2 mb-4 border rounded-2xl"
-                     value={searchQuery}
-                     onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-               </CardDescription>
-            </CardHeader>
-            <CardContent>
-               <Table>
-                  <TableHeader>
-                     <TableRow>
-                        <TableHead>Image</TableHead>
-                        <TableHead>Title</TableHead>
-                        <TableHead>Created By</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead>Action</TableHead>
-                     </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                     {filteredProperties.map((p) => (
-                        <TableRow key={p.id}>
-                           <TableCell>
-                              <img className="h-10 md:h-20 w-20 rounded-xl" src={p.image} alt={p.title} />
-                           </TableCell>
-                           <TableCell className="font-medium text-lg">{p.title}</TableCell>
-                           <TableCell className="font-medium">{p.createdBy}</TableCell>
-                           <TableCell>
-                              <Button
-                                 className={`${p.status === 'verified'
-                                    ? 'bg-green-300 '
-                                    : p.status === 'pending'
-                                       ? 'bg-yellow-200 '
-                                       : p.status === 'rejected'
-                                       && 'bg-red-400 '
-                                    } uppercase text-black`}
-                              >
-                                 {p.status}
-                              </Button>
-                           </TableCell>
-                           <TableCell>
-                              <Button
-                                 onClick={() => handleEdit(p.id)}
-                              >
-                                 View Details
-                              </Button>
-                           </TableCell>
-                        </TableRow>
-                     ))}
-                  </TableBody>
-               </Table>
-            </CardContent>
-         </Card>
+   // Loading and error handling
 
-      </main>
+   return (
+      <>
+         {loading && <Loadding />}
+         <main className="w-full bg-base">
+            <Card>
+               <CardHeader>
+                  <CardTitle className="text-2xl font-bold">
+                     Property
+                     <span className="text-primary ml-2">Table</span>
+                  </CardTitle>
+                  <CardDescription className="pt-6 w-[300px]">
+                     {/* Search input */}
+                     <Input
+                        type="text"
+                        placeholder="Search properties..."
+                        className="px-4 py-2 mb-4 border rounded-2xl"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                     />
+                  </CardDescription>
+               </CardHeader>
+               <CardContent>
+                  <PropertiesTable
+                     filteredProperties={filteredProperties}
+                     handleUpdate={handleUpdate}
+                     handleDelete={handleDelete}
+                  />
+               </CardContent>
+            </Card>
+         </main>
+      </>
    );
 }

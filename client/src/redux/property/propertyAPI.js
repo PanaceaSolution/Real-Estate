@@ -27,8 +27,8 @@ export async function createProduct(data) {
     throw new Error(error.message || "An unexpected error occurred");
   }
 }
-// get Own Property
 
+// get Own Property
 export async function getOwnProperty() {
   try {
     const response = await fetch(
@@ -126,7 +126,7 @@ export async function deleteProduct({ id, public_id }) {
     // }
 
     const response = await fetch(
-      `http://localhost:5000/api/v1/products/delete/${id}?public_id=${encodeURIComponent(public_id)}`,
+      `http://localhost:5000/api/v1/products/delete/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -134,6 +134,7 @@ export async function deleteProduct({ id, public_id }) {
           'Content-Type': 'application/json',
         },
         credentials: "include",
+        body: JSON.stringify({ public_id }),
       }
     );
 
@@ -146,5 +147,31 @@ export async function deleteProduct({ id, public_id }) {
     }
   } catch (error) {
     throw new Error(error.message || "An unexpected error occurred");
+  }
+}
+
+
+export async function getAllProducts() {
+  try {
+    const response = await fetch(`http://localhost:5000/api/v1/products`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        credentials: "include"
+      }
+    )
+
+    if (response.ok) {
+      const responseData = await response.json();
+      return { data: responseData };
+    } else {
+      const error = await response.json();
+      throw new Error(error.message || "Failed to fetch products");
+    }
+
+  } catch (error) {
+
   }
 }
