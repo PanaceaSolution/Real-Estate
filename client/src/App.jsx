@@ -30,6 +30,8 @@ import EditProperty from "./pages/Dashboard/EditProperty";
 //Home Layout & Admin Layout
 import HomeLayout from "./layout/HomeLayout";
 import AdminLayout from "./layout/AdminLayout";
+import Property from "./pages/property";
+import PropertyDetail from "./pages/propertyDetail";
 
 
 const App = () => {
@@ -43,6 +45,8 @@ const App = () => {
               <Route path="/" element={<Home />} />
               <Route path="/aboutUs" element={<AboutUs />} />
               <Route path="/search" element={<Search />} />
+              <Route path="/properties" element={<Property />} />
+              <Route path="/property/:id" element={<PropertyDetail />} />
             </Route>
 
             {/* Login & Signup Routes */}
