@@ -1,22 +1,23 @@
 import React from 'react';
 
 const DeleteModal = ({ isOpen, onClose, onDelete, itemToDelete }) => {
+  const {id,name}=itemToDelete||""
   if (!isOpen) return null;
 
   return (
     <div
-      className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50"
+      className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 p-4"
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-lg p-8 shadow-2xl"
-        onClick={(e) => e.stopPropagation()} // Prevent click from closing modal when clicking inside
+        className="bg-white rounded-lg p-8 shadow-2xl flex flex-col"
+        onClick={(e) => e.stopPropagation()} 
       >
-        <h2 className="text-lg font-bold">Are you sure you want to Delete :{itemToDelete}?</h2>
+       <div> <h2 className="text-lg font-bold">Are you sure you want to Delete ? <span className='text-red-400'>{name}</span></h2>
         <p className="mt-2 text-sm text-gray-500">
           Doing that could cause some issues elsewhere. Are you 100% sure it's OK?
-        </p>
-        <div className="mt-4 flex gap-2">
+        </p></div>
+        <div className="mt-4 flex gap-2 ml-auto">
           <button
             type="button"
             className="rounded bg-green-50 px-4 py-2 text-sm font-medium text-green-600"
