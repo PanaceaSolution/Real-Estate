@@ -1,31 +1,29 @@
-import React from 'react';
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
+// Import images and the Slider component from react-slick
 import house1 from '../assets/house1.png';
 import house4 from '../assets/house4.png';
 import house5 from '../assets/house5.png';
 import house6 from '../assets/house6.png';
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 
+// Define a custom Next Arrow component for the slider
 function SampleNextArrow(props) {
    const { className, style, onClick } = props;
    return (
       <div
          className={className}
-         style={{ ...style, display: "block", background: "#A855F7", borderRadius: "50%" }}
+         style={{ ...style, display: "block", background: "#A855F7", borderRadius: "50%", marginRight: "50px", zIndex: "10" }}
          onClick={onClick}
       />
    );
 }
 
+// Define a custom Previous Arrow component for the slider
 function SamplePrevArrow(props) {
    const { className, style, onClick } = props;
    return (
       <div
          className={className}
-         style={{ ...style, display: "block", background: "#A855F7", borderRadius: "50%" }}
+         style={{ ...style, display: "block", background: "#A855F7", borderRadius: "50%", marginLeft: "50px", zIndex: "10" }}
          onClick={onClick}
       />
    );
@@ -33,55 +31,40 @@ function SamplePrevArrow(props) {
 
 export const HeroSection = () => {
    const settings = {
-      dots: true,
-      infinite: true,
-      speed: 1000,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      autoplay: true,
-      autoplaySpeed: 5000,
-      pauseOnHover: true,
-      pauseOnFocus: true,
-      cssEase: 'linear',
-      nextArrow: <SampleNextArrow />,
-      prevArrow: <SamplePrevArrow />,
+      dots: true, // Enable dots for slide indicators
+      infinite: true, // Loop through slides infinitely
+      speed: 1500, // Transition speed between slides
+      slidesToShow: 1, // Number of slides to show at once
+      slidesToScroll: 1, // Number of slides to scroll at a time
+      autoplay: true, // Enable automatic sliding
+      autoplaySpeed: 5000, // Time duration for autoplay between slides
+      pauseOnHover: true, // Pause autoplay on hover
+      pauseOnFocus: true, // Pause autoplay when the slider is focused
+      cssEase: 'linear', // Animation easing effect for sliding
+      nextArrow: <SampleNextArrow />, // Use custom next arrow
+      prevArrow: <SamplePrevArrow />, // Use custom previous arrow
    };
-   return (
-      <section className="w-full flex justify-center items-center lg:gap-10">
 
-         <div className="relative w-full">
-            <Carousel
-               showThumbs={false}
-               showArrows={true}
-               autoPlay={true}
-               infiniteLoop={true}
-               interval={5000}
-               transitionTime={2000}
-               swipeable={true}
-            >
-               {[house1, house4, house5, house6].map((house) => (
-                  <div key={house} className='rounded-2xl relative'>
-                     <img src={house} alt="House" className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:min-h-screen object-fill" />
-                  </div>
-               ))}
-            </Carousel>
-            {/* <Slider {...settings}>
-               {[house1, house4, house5, house6].map((house) => (
-                  <div key={house} className='rounded-2xl relative'>
-                     <img src={house} alt="House" className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[950px] object-fill" />
-                  </div>
-               ))}
-            </Slider> */}
-            <div className=" lg:absolute inset-0 bg-black bg-opacity-10 flex justify-center items-center">
-               <div className="w-full xl:w-1/2 lg:ml-4 bg-black px-4 py-2 lg:rounded-2xl lg:bg-opacity-70">
-                  <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold uppercase mb-2 text-white">
-                     Let's Find Your <br />
-                     <span className="text-purple-500">Dream Home</span>
-                  </h1>
-                  <p className="text-white text-xs md:text-lg">
-                     Welcome to our real estate agency, where finding your dream home is our top priority.
-                  </p>
-               </div>
+   return (
+      <section className="w-full flex justify-center items-center lg:gap-10 mb-10">
+         <div className='grid grid-cols-1 xl:grid-cols-2 items-center justify-center '>
+            {/* Left section with the title */}
+            <div className="w-full py-2 rounded-2xl ">
+               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-6xl xl:text-7xl font-bold uppercase mb-2">
+                  Let's Find Your <br />
+                  <span className="text-primary">Dream Home</span>
+               </h1>
+            </div>
+
+            {/* Right section with the image slider */}
+            <div className="relative w-full">
+               <Slider {...settings} className="rounded-2xl overflow-hidden">
+                  {[house1, house4, house5, house6].map((house) => (
+                     <div key={house} className='rounded-2xl relative'>
+                        <img src={house} alt="House" className="w-full h-[300px] sm:h-[400px] md:h-[500px] object-fill" />
+                     </div>
+                  ))}
+               </Slider>
             </div>
          </div>
       </section>

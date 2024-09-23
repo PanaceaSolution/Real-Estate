@@ -1,0 +1,123 @@
+[
+    {
+      "name": "Product 1",
+      "price": 25,
+      "description": "Description for Product 1",
+      "address": "Address 1, City, Country",
+      "imageUrl": "https://images.unsplash.com/photo-1621111848501-8d3634f82336?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1565&q=80",
+      "imagePublicId": "image_public_id_1",
+      "createdby": {
+        "userId": "609c8e60a61e2c001f4b88e1",
+        "name": "User 1"
+      }
+    },
+    {
+      "name": "Product 2",
+      "price": 50,
+      "description": "Description for Product 2",
+      "address": "Address 2, City, Country",
+      "imageUrl": "https://images.unsplash.com/photo-1621111848501-8d3634f82336?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1565&q=80",
+      "imagePublicId": "image_public_id_2",
+      "createdby": {
+        "userId": "609c8e60a61e2c001f4b88e2",
+        "name": "User 1"
+      }
+    },
+    {
+      "name": "Product 3",
+      "price": 75,
+      "description": "Description for Product 3",
+      "address": "Address 3, City, Country",
+      "imageUrl": "https://images.unsplash.com/photo-1621111848501-8d3634f82336?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1565&q=80",
+      "imagePublicId": "image_public_id_3",
+      "createdby": {
+        "userId": "609c8e60a61e2c001f4b88e3",
+        "name": "User 2"
+      }
+    },
+    {
+      "name": "Product 4",
+      "price": 10,
+      "description": "Description for Product 4",
+      "address": "Address 4, City, Country",
+      "imageUrl": "https://images.unsplash.com/photo-1621111848501-8d3634f82336?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1565&q=80",
+      "imagePublicId": "image_public_id_4",
+      "createdby": {
+        "userId": "609c8e60a61e2c001f4b88e4",
+        "name": "User 2"
+      }
+    },
+    {
+      "name": "Product 5",
+      "price": 30,
+      "description": "Description for Product 5",
+      "address": "Address 5, City, Country",
+      "imageUrl": "https://images.unsplash.com/photo-1621111848501-8d3634f82336?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxpaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1565&q=80",
+      "imagePublicId": "image_public_id_5",
+      "createdby": {
+        "userId": "609c8e60a61e2c001f4b88e5",
+        "name": "User 3"
+      }
+    },
+    {
+      "name": "Product 6",
+      "price": 60,
+      "description": "Description for Product 6",
+      "address": "Address 6, City, Country",
+      "imageUrl": "https://images.unsplash.com/photo-1621111848501-8d3634f82336?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxpaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1565&q=80",
+      "imagePublicId": "image_public_id_6",
+      "createdby": {
+        "userId": "609c8e60a61e2c001f4b88e6",
+        "name": "User 3"
+      }
+    },
+    {
+      "name": "Product 7",
+      "price": 20,
+      "description": "Description for Product 7",
+      "address": "Address 7, City, Country",
+      "imageUrl": "https://images.unsplash.com/photo-1621111848501-8d3634f82336?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxpaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1565&q=80",
+      "imagePublicId": "image_public_id_7",
+      "createdby": {
+        "userId": "609c8e60a61e2c001f4b88e7",
+        "name": "User 4"
+      }
+    },
+    {
+      "name": "Product 8",
+      "price": 45,
+      "description": "Description for Product 8",
+      "address": "Address 8, City, Country",
+      "imageUrl": "https://images.unsplash.com/photo-1621111848501-8d3634f82336?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxpaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1565&q=80",
+      "imagePublicId": "image_public_id_8",
+      "createdby": {
+        "userId": "609c8e60a61e2c001f4b88e8",
+        "name": "User 4"
+      }
+    },
+    {
+      "name": "Product 9",
+      "price": 35,
+      "description": "Description for Product 9",
+      "address": "Address 9, City, Country",
+      "imageUrl": "https://images.unsplash.com/photo-1621111848501-8d3634f82336?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxpaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1565&q=80",
+      "imagePublicId": "image_public_id_9",
+      "createdby": {
+        "userId": "609c8e60a61e2c001f4b88e9",
+        "name": "User 5"
+      }
+    },
+    {
+      "name": "Product 10",
+      "price": 55,
+      "description": "Description for Product 10",
+      "address": "Address 10, City, Country",
+      "imageUrl": "https://images.unsplash.com/photo-1621111848501-8d3634f82336?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxpaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1565&q=80",
+      "imagePublicId": "image_public_id_10",
+      "createdby": {
+        "userId": "609c8e60a61e2c001f4b88ea",
+        "name": "User 5"
+      }
+    }
+  ]
+  

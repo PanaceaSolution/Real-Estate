@@ -22,7 +22,13 @@ app.use(express.json());
 app.use(helmet()); // sets various HTTP headers to secure your app
 app.use(xss()); // protects against crosssite scripting (xxs) attacks
 app.use(mongoSanitize()); // prevents mongoDB noSQL Injection attacks
-app.use(cors()); // enable cross origin Resource Sharing
+app.use(cors({
+  origin:
+  process.env.HOST_URL  ||
+    'http://localhost:5173',
+  methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
+  credentials: true
+})); // enable cross origin Resource Sharing
 
 // route
 app.use('/api/v1/auth', authRouter);
