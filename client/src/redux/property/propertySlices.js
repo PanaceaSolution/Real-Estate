@@ -120,7 +120,7 @@ export const propertySlice = createSlice({
       })
       .addCase(createProductAsync.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.products.push(action.payload);
+        state.products = action.payload;
         state.isCreated = true;
       })
       .addCase(createProductAsync.rejected, (state, action) => {

@@ -12,7 +12,7 @@ export const PropertyCard = ({ ...p }) => {
             <div className='space-y-2 p-2'>
                <div>
                   <h1 className='flex justify-between items-center text-lg font-semibold'>
-                     {p.title}
+                     {p.name}
                      <p className='text-2xl font-bold text-primary'>${p.price}</p>
                   </h1>
                   <p className='text-sm text-primary/80 flex items-center gap-1'>
